@@ -4,8 +4,10 @@ import 'package:gap/gap.dart';
 import 'package:glass_bottom_bar_ui/glass_morphism_ui.dart';
 import 'package:glass_bottom_bar_ui/liquid_glass_ui.dart';
 
-/// Sample data provider for navigation pages and items.
+/// Sample Data Provider
+/// Provides mock screens and navigation icons for demonstration.
 abstract class AppSampleData {
+  /// Sample page views displayed in the body area
   static const List<Widget> pages = [
     Center(
       child: Text(
@@ -49,6 +51,7 @@ abstract class AppSampleData {
     ),
   ];
 
+  /// Sample bottom navigation icons (Active vs Inactive icons)
   static const List<BottomNavigationItem> items = [
     BottomNavigationItem(
       selectedIcon: Icons.home,
@@ -77,7 +80,8 @@ abstract class AppSampleData {
   ];
 }
 
-/// Main selection screen offering access to [GlassmorphismUI] and [LiquidGlassUI].
+/// Main Selection Screen
+/// Offers interactive buttons to open [GlassmorphismUI] or [LiquidGlassUI].
 class MainHomeScreen extends StatelessWidget {
   /// Creates [MainHomeScreen].
   const MainHomeScreen({super.key});
@@ -95,6 +99,7 @@ class MainHomeScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
+          // Background Gradient
           const Positioned.fill(
             child: DecoratedBox(decoration: _bgDecoration),
           ),
@@ -134,6 +139,8 @@ class MainHomeScreen extends StatelessWidget {
                     ),
                   ),
                   const Spacer(),
+
+                  // Option 1: Glassmorphism UI
                   const NavigationGlassCard(
                     key: ValueKey('glassmorphism_card_button'),
                     title: 'Glassmorphism UI',
@@ -146,7 +153,10 @@ class MainHomeScreen extends StatelessWidget {
                       items: AppSampleData.items,
                     ),
                   ),
+
                   const Gap(20.0),
+
+                  // Option 2: Liquid Glass UI
                   const NavigationGlassCard(
                     key: ValueKey('liquid_glass_card_button'),
                     title: 'Liquid Glass UI',
@@ -159,6 +169,7 @@ class MainHomeScreen extends StatelessWidget {
                       items: AppSampleData.items,
                     ),
                   ),
+
                   const Spacer(),
                 ],
               ),
@@ -170,24 +181,15 @@ class MainHomeScreen extends StatelessWidget {
   }
 }
 
-/// Reusable glassmorphic navigation button card.
+/// Reusable Glass Navigation Button Card
+/// Combines BackdropFilter blur + InkWell splash feedback for navigation.
 class NavigationGlassCard extends StatelessWidget {
-  /// Card title text.
   final String title;
-
-  /// Card subtitle text.
   final String subtitle;
-
-  /// Leading icon data.
   final IconData icon;
-
-  /// Gradient background colors.
   final List<Color> colors;
-
-  /// Target screen widget to navigate to on tap.
   final Widget targetScreen;
 
-  /// Creates a [NavigationGlassCard].
   const NavigationGlassCard({
     super.key,
     required this.title,

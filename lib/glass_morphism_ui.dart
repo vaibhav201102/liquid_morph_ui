@@ -1,15 +1,20 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:glass_bottom_bar_ui/glass_ui_contracts.dart';
 import 'package:glass_bottom_bar_ui/liquid_glass_ui.dart';
+
+import 'core/glass_navigation_controller.dart';
+import 'core/glass_scope.dart';
+import 'core/glass_ui_contracts.dart';
 
 /// Glassmorphism UI Screen implementing [GlassUIContract].
 ///
-/// OOP PATTERNS USED:
-/// 1. Abstraction (conforms to [GlassUIContract])
-/// 2. Encapsulation (gesture math encapsulated in [TabGesturePhysics])
-/// 3. Factory Pattern (uses [GlassThemeFactory])
+/// ADVANCED ENTERPRISE OOP PATTERNS:
+/// 1. Clean Architecture (UI Presentation vs Domain BLoC / Controller)
+/// 2. Observer Pattern (Reactive [GlassNavigationController] state notifications)
+/// 3. Dependency Injection (Scoped [GlassScope] InheritedWidget)
+/// 4. Command Pattern ([SelectTabCommand], [DragUpdateCommand], [DragEndCommand])
+/// 5. Immutable Value State ([GlassNavigationState] value object)
 class GlassmorphismUI extends StatefulWidget implements GlassUIContract {
   @override
   final List<Widget> pages;
@@ -29,8 +34,7 @@ class GlassmorphismUI extends StatefulWidget implements GlassUIContract {
 }
 
 class _GlassmorphismUIState extends State<GlassmorphismUI> {
-  int _selectedIndex = 0; // Active tab index
-  double? _dragPosition; // Current X position in pixels
+  late GlassNavigationController _controller;
 
   static const double _blurSigma = 15.0;
   static const double _borderRadius = 50.0;
@@ -47,23 +51,46 @@ class _GlassmorphismUIState extends State<GlassmorphismUI> {
   );
 
   @override
+  void initState() {
+    super.initState();
+    _controller = GlassNavigationController(itemCount: widget.items.length);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      appBar: _buildAppBar(),
-      body: Stack(
-        children: [
-          const Positioned.fill(
-            child: DecoratedBox(decoration: _bgDecoration),
-          ),
-          IndexedStack(index: _selectedIndex, children: widget.pages),
-        ],
+    return GlassScope(
+      controller: _controller,
+      child: ValueListenableBuilder<GlassNavigationState>(
+        valueListenable: _controller,
+        builder: (context, state, _) {
+          return Scaffold(
+            extendBody: true,
+            appBar: _buildAppBar(context),
+            body: Stack(
+              children: [
+                const Positioned.fill(
+                  child: DecoratedBox(decoration: _bgDecoration),
+                ),
+                IndexedStack(
+                  index: state.selectedIndex,
+                  children: widget.pages,
+                ),
+              ],
+            ),
+            bottomNavigationBar: _buildBottomNavBar(context, state),
+          );
+        },
       ),
-      bottomNavigationBar: _buildBottomNavBar(),
     );
   }
 
-  PreferredSizeWidget _buildAppBar() {
+  PreferredSizeWidget _buildAppBar(BuildContext context) {
     return PreferredSize(
       preferredSize: const Size.fromHeight(64.0),
       child: SafeArea(
@@ -112,7 +139,7 @@ class _GlassmorphismUIState extends State<GlassmorphismUI> {
     );
   }
 
-  Widget _buildBottomNavBar() {
+  Widget _buildBottomNavBar(BuildContext context, GlassNavigationState state) {
     return SafeArea(
       minimum: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 12.0),
       child: ClipRRect(
@@ -132,33 +159,40 @@ class _GlassmorphismUIState extends State<GlassmorphismUI> {
                 final count = widget.items.length;
                 if (count == 0) return const Offstage();
                 final itemWidth = constraints.maxWidth / count;
-                final physics = TabGesturePhysics(itemCount: count);
 
                 return GestureDetector(
                   key: const ValueKey('glass_bottom_nav_bar_gesture'),
                   behavior: HitTestBehavior.opaque,
-                  onHorizontalDragStart: (d) =>
-                      setState(() => _dragPosition = d.localPosition.dx),
-                  onHorizontalDragUpdate: (d) => setState(
-                    () => _dragPosition = d.localPosition.dx.clamp(
-                      0.0,
-                      constraints.maxWidth,
-                    ),
-                  ),
-                  onHorizontalDragEnd: (d) =>
-                      _onDragEnd(physics, constraints.maxWidth, itemWidth),
-                  onHorizontalDragCancel: () =>
-                      setState(() => _dragPosition = null),
+                  onHorizontalDragStart: (d) => DragUpdateCommand(
+                    dragX: d.localPosition.dx,
+                    barWidth: constraints.maxWidth,
+                  ).execute(_controller),
+                  onHorizontalDragUpdate: (d) => DragUpdateCommand(
+                    dragX: d.localPosition.dx,
+                    barWidth: constraints.maxWidth,
+                  ).execute(_controller),
+                  onHorizontalDragEnd: (d) => DragEndCommand(
+                    barWidth: constraints.maxWidth,
+                    itemWidth: itemWidth,
+                  ).execute(_controller),
+                  onHorizontalDragCancel: () => _controller.cancelDrag(),
                   child: Stack(
                     children: [
                       _buildSelectionCapsule(
-                        physics,
+                        state,
                         itemWidth,
                         constraints.maxWidth,
                       ),
                       Row(
                         children: widget.items
-                            .map((item) => Expanded(child: _buildNavItem(item)))
+                            .map((item) => Expanded(
+                                  child: _buildNavItem(
+                                    context,
+                                    item,
+                                    state,
+                                    itemWidth,
+                                  ),
+                                ))
                             .toList(),
                       ),
                     ],
@@ -173,17 +207,17 @@ class _GlassmorphismUIState extends State<GlassmorphismUI> {
   }
 
   Widget _buildSelectionCapsule(
-    TabGesturePhysics physics,
+    GlassNavigationState state,
     double itemWidth,
     double maxWidth,
   ) {
-    final targetX = physics.calculateTargetX(_selectedIndex, itemWidth);
-    final currentX = _dragPosition ?? targetX;
+    final targetX = (state.selectedIndex * itemWidth) + (itemWidth / 2);
+    final currentX = state.dragX ?? targetX;
     final width = itemWidth * 0.72;
-    final left = physics.clampLeft(currentX, width, maxWidth);
+    final left = (currentX - (width / 2)).clamp(0.0, maxWidth - width);
 
     return AnimatedPositioned(
-      duration: _dragPosition != null
+      duration: state.isDragging
           ? Duration.zero
           : const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
@@ -202,17 +236,19 @@ class _GlassmorphismUIState extends State<GlassmorphismUI> {
     );
   }
 
-  Widget _buildNavItem(BottomNavigationItem item) {
-    final isSelected = _selectedIndex == item.index;
+  Widget _buildNavItem(
+    BuildContext context,
+    BottomNavigationItem item,
+    GlassNavigationState state,
+    double itemWidth,
+  ) {
+    final isSelected = state.selectedIndex == item.index;
     return InkWell(
       key: ValueKey('glass_tab_item_${item.index}'),
       borderRadius: _pillRadius,
       onTap: () {
-        if (_selectedIndex == item.index) return;
-        setState(() {
-          _dragPosition = null;
-          _selectedIndex = item.index;
-        });
+        SelectTabCommand(index: item.index, itemWidth: itemWidth)
+            .execute(_controller);
       },
       child: Center(
         child: AnimatedSwitcher(
@@ -226,18 +262,5 @@ class _GlassmorphismUIState extends State<GlassmorphismUI> {
         ),
       ),
     );
-  }
-
-  void _onDragEnd(
-    TabGesturePhysics physics,
-    double maxWidth,
-    double itemWidth,
-  ) {
-    if (_dragPosition == null) return;
-    final newIndex = physics.calculateIndex(_dragPosition!, itemWidth);
-    setState(() {
-      _selectedIndex = newIndex;
-      _dragPosition = null;
-    });
   }
 }

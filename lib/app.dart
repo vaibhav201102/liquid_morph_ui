@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:glass_bottom_bar_ui/main_home_screen.dart';
 
-export 'package:glass_bottom_bar_ui/main_home_screen.dart';
-
-/// Root application widget configuring app theme and initial route.
+/// Root application widget configuring global MaterialApp theme and home route.
 class MyApp extends StatelessWidget {
-  static const Color _seedColor = Color(0xFF6A11CB);
+  static const Color _seedColor = Color(0xFF6A11CB); // Theme seed color
 
   /// Creates [MyApp].
   const MyApp({super.key});

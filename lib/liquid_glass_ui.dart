@@ -2,15 +2,18 @@ import 'dart:math' as math;
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:glass_bottom_bar_ui/glass_ui_contracts.dart';
+import 'core/glass_navigation_controller.dart';
+import 'core/glass_scope.dart';
+import 'core/glass_ui_contracts.dart';
 
 /// Liquid Glass UI Screen implementing [GlassUIContract].
 ///
-/// OOP PATTERNS USED:
-/// 1. Abstraction (conforms to [GlassUIContract])
-/// 2. Encapsulation (gesture physics encapsulated in [TabGesturePhysics])
-/// 3. Factory Pattern (uses [GlassThemeFactory])
-/// 4. Strategy Pattern (Custom Canvas Painter [_LiquidGlassPainter])
+/// ADVANCED ENTERPRISE OOP PATTERNS:
+/// 1. Clean Architecture (Separation of BLoC / Controller & Presentation Layer)
+/// 2. Observer Pattern (Reactive [GlassNavigationController] state updates)
+/// 3. Dependency Injection (Scoped [GlassScope] InheritedWidget)
+/// 4. Command Pattern ([SelectTabCommand], [DragUpdateCommand], [DragEndCommand])
+/// 5. Custom Canvas Strategy Pattern ([_LiquidGlassPainter])
 class LiquidGlassUI extends StatefulWidget implements GlassUIContract {
   @override
   final List<Widget> pages;
@@ -31,13 +34,7 @@ class LiquidGlassUI extends StatefulWidget implements GlassUIContract {
 
 class _LiquidGlassUIState extends State<LiquidGlassUI>
     with SingleTickerProviderStateMixin {
-  int _selectedIndex = 0;
-  double? _dragX;
-  bool _isDragging = false;
-
-  double _startCenterX = 0.0;
-  double _targetCenterX = 0.0;
-
+  late GlassNavigationController _controller;
   late PageController _pageController;
   late AnimationController _animController;
   late Animation<double> _fluidAnimation;
@@ -58,7 +55,10 @@ class _LiquidGlassUIState extends State<LiquidGlassUI>
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: _selectedIndex);
+    _controller = GlassNavigationController(itemCount: widget.items.length);
+    _pageController = PageController(
+      initialPage: _controller.value.selectedIndex,
+    );
     _animController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 360),
@@ -73,40 +73,40 @@ class _LiquidGlassUIState extends State<LiquidGlassUI>
   void dispose() {
     _pageController.dispose();
     _animController.dispose();
+    _controller.dispose();
     super.dispose();
-  }
-
-  double _getCurrentCenterX(double itemWidth) {
-    if (_dragX != null) return _dragX!;
-    if (!_animController.isAnimating && _targetCenterX > 0) {
-      return _targetCenterX;
-    }
-    return lerpDouble(_startCenterX, _targetCenterX, _fluidAnimation.value) ??
-        (_selectedIndex * itemWidth + itemWidth / 2);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      appBar: _buildAppBar(),
-      body: Stack(
-        children: [
-          const Positioned.fill(
-            child: DecoratedBox(decoration: _bgDecoration),
-          ),
-          PageView(
-            controller: _pageController,
-            physics: const NeverScrollableScrollPhysics(),
-            children: widget.pages,
-          ),
-        ],
+    return GlassScope(
+      controller: _controller,
+      child: ValueListenableBuilder<GlassNavigationState>(
+        valueListenable: _controller,
+        builder: (context, state, _) {
+          return Scaffold(
+            extendBody: true,
+            appBar: _buildAppBar(context),
+            body: Stack(
+              children: [
+                const Positioned.fill(
+                  child: DecoratedBox(decoration: _bgDecoration),
+                ),
+                PageView(
+                  controller: _pageController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: widget.pages,
+                ),
+              ],
+            ),
+            bottomNavigationBar: _buildBottomNavBar(context, state),
+          );
+        },
       ),
-      bottomNavigationBar: _buildBottomNavBar(),
     );
   }
 
-  PreferredSizeWidget _buildAppBar() {
+  PreferredSizeWidget _buildAppBar(BuildContext context) {
     return PreferredSize(
       preferredSize: const Size.fromHeight(64.0),
       child: SafeArea(
@@ -210,7 +210,10 @@ class _LiquidGlassUIState extends State<LiquidGlassUI>
     );
   }
 
-  Widget _buildBottomNavBar() {
+  Widget _buildBottomNavBar(
+    BuildContext context,
+    GlassNavigationState state,
+  ) {
     return SafeArea(
       minimum: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
       child: RepaintBoundary(
@@ -231,53 +234,66 @@ class _LiquidGlassUIState extends State<LiquidGlassUI>
                   final count = widget.items.length;
                   if (count == 0) return const Offstage();
                   final itemWidth = constraints.maxWidth / count;
-                  final physics = TabGesturePhysics(itemCount: count);
-
-                  if (_targetCenterX == 0) {
-                    _startCenterX = physics.calculateTargetX(
-                      _selectedIndex,
-                      itemWidth,
-                    );
-                    _targetCenterX = _startCenterX;
-                  }
 
                   return GestureDetector(
                     key: const ValueKey('liquid_bottom_nav_bar_gesture'),
                     behavior: HitTestBehavior.opaque,
-                    onHorizontalDragStart: (d) => setState(() {
-                      _isDragging = true;
-                      _dragX = d.localPosition.dx.clamp(
-                        0.0,
-                        constraints.maxWidth,
-                      );
-                    }),
-                    onHorizontalDragUpdate: (d) => setState(
-                      () => _dragX = d.localPosition.dx.clamp(
-                        0.0,
-                        constraints.maxWidth,
-                      ),
-                    ),
-                    onHorizontalDragEnd: (d) =>
-                        _onDragEnd(physics, constraints.maxWidth, itemWidth),
-                    onHorizontalDragCancel: () => setState(() {
-                      _isDragging = false;
-                      _dragX = null;
-                    }),
+                    onHorizontalDragStart: (d) => DragUpdateCommand(
+                      dragX: d.localPosition.dx,
+                      barWidth: constraints.maxWidth,
+                    ).execute(_controller),
+                    onHorizontalDragUpdate: (d) => DragUpdateCommand(
+                      dragX: d.localPosition.dx,
+                      barWidth: constraints.maxWidth,
+                    ).execute(_controller),
+                    onHorizontalDragEnd: (d) {
+                      DragEndCommand(
+                        barWidth: constraints.maxWidth,
+                        itemWidth: itemWidth,
+                      ).execute(_controller);
+                      _animController.forward(from: 0.0);
+                      if (_pageController.hasClients) {
+                        _pageController.animateToPage(
+                          _controller.value.selectedIndex,
+                          duration: const Duration(milliseconds: 350),
+                          curve: Curves.easeOutCubic,
+                        );
+                      }
+                    },
+                    onHorizontalDragCancel: () => _controller.cancelDrag(),
                     child: Stack(
                       children: [
                         AnimatedBuilder(
                           animation: _animController,
                           builder: (context, _) {
-                            final currentX = _getCurrentCenterX(itemWidth);
+                            final progress = _animController.isAnimating
+                                ? _fluidAnimation.value
+                                : 1.0;
+                            final currentX = state.dragX ??
+                                lerpDouble(
+                                  state.startCenterX == 0
+                                      ? (state.selectedIndex * itemWidth +
+                                          itemWidth / 2)
+                                      : state.startCenterX,
+                                  state.targetCenterX == 0
+                                      ? (state.selectedIndex * itemWidth +
+                                          itemWidth / 2)
+                                      : state.targetCenterX,
+                                  progress,
+                                ) ??
+                                (state.selectedIndex * itemWidth +
+                                    itemWidth / 2);
+
                             final lightX = (currentX / constraints.maxWidth)
                                 .clamp(0.0, 1.0);
+
                             return CustomPaint(
                               size: Size(constraints.maxWidth, 72.0),
                               painter: _LiquidGlassPainter(
                                 currentCenterX: currentX,
                                 itemWidth: itemWidth,
                                 lightX: lightX,
-                                isDragging: _isDragging,
+                                isDragging: state.isDragging,
                                 isAnimating: _animController.isAnimating,
                                 animValue: _fluidAnimation.value,
                               ),
@@ -287,7 +303,13 @@ class _LiquidGlassUIState extends State<LiquidGlassUI>
                         Row(
                           children: widget.items.asMap().entries.map((e) {
                             return Expanded(
-                              child: _buildNavItem(e.value, e.key, itemWidth),
+                              child: _buildNavItem(
+                                context,
+                                e.value,
+                                e.key,
+                                itemWidth,
+                                state,
+                              ),
                             );
                           }).toList(),
                         ),
@@ -304,15 +326,28 @@ class _LiquidGlassUIState extends State<LiquidGlassUI>
   }
 
   Widget _buildNavItem(
+    BuildContext context,
     BottomNavigationItem item,
     int index,
     double itemWidth,
+    GlassNavigationState state,
   ) {
-    final isSelected = _selectedIndex == index;
+    final isSelected = state.selectedIndex == index;
     return InkWell(
       key: ValueKey('liquid_tab_item_${item.index}'),
       borderRadius: _pillRadius,
-      onTap: () => _onTabTap(index, itemWidth),
+      onTap: () {
+        SelectTabCommand(index: index, itemWidth: itemWidth)
+            .execute(_controller);
+        _animController.forward(from: 0.0);
+        if (_pageController.hasClients) {
+          _pageController.animateToPage(
+            index,
+            duration: const Duration(milliseconds: 350),
+            curve: Curves.easeOutCubic,
+          );
+        }
+      },
       child: Center(
         child: AnimatedScale(
           scale: isSelected ? 1.15 : 1.0,
@@ -326,57 +361,6 @@ class _LiquidGlassUIState extends State<LiquidGlassUI>
         ),
       ),
     );
-  }
-
-  void _onTabTap(int index, double itemWidth) {
-    final physics = TabGesturePhysics(itemCount: widget.items.length);
-    final target = physics.calculateTargetX(index, itemWidth);
-    if (_selectedIndex == index && _targetCenterX == target) return;
-
-    final currentX = _getCurrentCenterX(itemWidth);
-    setState(() {
-      _startCenterX = currentX;
-      _targetCenterX = target;
-      _selectedIndex = index;
-      _dragX = null;
-      _isDragging = false;
-    });
-
-    _animController.forward(from: 0.0);
-    if (_pageController.hasClients) {
-      _pageController.animateToPage(
-        index,
-        duration: const Duration(milliseconds: 350),
-        curve: Curves.easeOutCubic,
-      );
-    }
-  }
-
-  void _onDragEnd(
-    TabGesturePhysics physics,
-    double barWidth,
-    double itemWidth,
-  ) {
-    if (_dragX == null) return;
-    final newIndex = physics.calculateIndex(_dragX!, itemWidth);
-    final target = physics.calculateTargetX(newIndex, itemWidth);
-
-    setState(() {
-      _startCenterX = _dragX!;
-      _targetCenterX = target;
-      _selectedIndex = newIndex;
-      _dragX = null;
-      _isDragging = false;
-    });
-
-    _animController.forward(from: 0.0);
-    if (_pageController.hasClients) {
-      _pageController.animateToPage(
-        newIndex,
-        duration: const Duration(milliseconds: 350),
-        curve: Curves.easeOutCubic,
-      );
-    }
   }
 }
 
