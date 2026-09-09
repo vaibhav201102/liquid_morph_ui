@@ -1,4 +1,4 @@
-library liquid_morph_ui;
+library;
 
 // Core Contracts & Architecture
 export 'package:liquid_morph_ui/core/glass_navigation_controller.dart';
