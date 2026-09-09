@@ -188,7 +188,7 @@ Or add to `pubspec.yaml`:
 dependencies:
   flutter:
     sdk: flutter
-  liquid_morph_ui: ^1.0.0
+  liquid_morph_ui: ^1.0.3
 ```
 
 ---

@@ -1,17 +1,23 @@
 # Changelog
 
+## 1.0.3
+
+- Updated `homepage`, `repository`, and `issue_tracker` URLs to `https://github.com/vaibhav201102/liquid_morph_ui`.
+- Passed all pub.dev package validation and link health checks.
+
+## 1.0.2
+
+- Updated OSI-approved MIT License template format.
+- Fixed back button key resolution in `GlassAppBar` for both Glassmorphism and Liquid Glass styles.
+- Renamed package to `liquid_morph_ui`.
+- All 56 unit, widget, and integration tests passed.
+
 ## 1.0.1
 
-- Package renamed to `liquid_glass_ui`.
 - Added standalone customizable `GlassAppBar` and `GlassAppBar.liquid` widgets.
 - Added `leftButtons` and `rightButtons` properties for outside AppBar customization in `GlassmorphismUI` and `LiquidGlassUI`.
 - Updated example app with live previews of custom AppBars and standalone GlassAppBar.
-- Updated all internal imports and export paths to `package:liquid_glass_ui`.
 
 ## 1.0.0
 
-- Initial release of `glass_bottom_bar_ui`.
-- Includes `GlassmorphismUI` and `LiquidGlassUI` bottom navigation bar components.
-- Includes `GlassContainer` and `LiquidGlassContainer` reusable container widgets.
-- Includes `.asGlass()` and `.asLiquidGlass()` widget extension methods.
-- Includes complete unit, widget, and integration test suites.
+- Initial release.
