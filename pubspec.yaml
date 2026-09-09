@@ -1,8 +1,9 @@
 name: glass_bottom_bar_ui
-description: "A Flutter project showcasing Glassmorphism and Liquid Glass bottom navigation bars."
-publish_to: 'none'
-
-version: 1.0.0+1
+description: "A high-performance Flutter UI kit for Glassmorphism and behavior-driven Liquid Glass bottom navigation bars."
+version: 1.0.0
+homepage: https://github.com/vaibhavjoshi/glass_bottom_bar_ui
+repository: https://github.com/vaibhavjoshi/glass_bottom_bar_ui
+issue_tracker: https://github.com/vaibhavjoshi/glass_bottom_bar_ui/issues
 
 environment:
   sdk: '>=3.0.0 <4.0.0'

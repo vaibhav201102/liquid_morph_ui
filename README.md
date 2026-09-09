@@ -5,7 +5,7 @@
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Platform](https://img.shields.io/badge/Platform-iOS%20%7C%20Android%20%7C%20macOS%20%7C%20Web-blue)
 
-A modern, high-performance Flutter showcase demonstrating two cutting-edge glass UI paradigms: **Classic Glassmorphism** and **Behavior-Driven Liquid Glass**, engineered with enterprise-grade **Clean Architecture** and **OOP Design Patterns**.
+A modern, high-performance Flutter showcase and reusable library demonstrating two cutting-edge glass UI paradigms: **Classic Glassmorphism** and **Behavior-Driven Liquid Glass**, engineered with enterprise-grade **Clean Architecture** and **OOP Design Patterns**.
 
 ---
 
@@ -22,6 +22,40 @@ A modern, high-performance Flutter showcase demonstrating two cutting-edge glass
 - **Viscous Shape Deformation**: Capsule indicator deforms (stretches up to 20% horizontally and compresses vertically) during fast movements, simulating fluid surface tension.
 - **Spring Physics**: Bouncing spring response (`Cubic(0.25, 1.15, 0.3, 1.0)`) on tab arrival.
 - **Hardware-Accelerated Page Transitions**: Integrated `PageView` for native GPU compositor layer sliding.
+
+---
+
+## 🧩 Reusable Library & Extensions (`glass_ui_kit.dart`)
+
+Any developer can easily apply Glassmorphism or Liquid Glass to **ANY** widget or container using direct extension methods or reusable container wrappers:
+
+### 1. Extension Methods on `Widget`
+```dart
+import 'package:glass_bottom_bar_ui/glass_ui_kit.dart';
+
+// Turn ANY widget into Frosted Glass in 1 line
+Text('Frosted Card').asGlass(blur: 15.0);
+
+// Turn ANY widget into Liquid Glass in 1 line
+Text('Liquid Card').asLiquidGlass(glowColor: Color(0x3038BDF8));
+```
+
+### 2. Reusable Glass Container Wrappers
+```dart
+// Reusable Glassmorphism Container
+GlassContainer(
+  blur: 15.0,
+  borderRadius: BorderRadius.circular(20.0),
+  child: MyWidget(),
+);
+
+// Reusable Liquid Glass Container
+LiquidGlassContainer(
+  blur: 18.0,
+  glowColor: Color(0x3038BDF8),
+  child: MyWidget(),
+);
+```
 
 ---
 
@@ -57,12 +91,16 @@ This codebase is structured around production-grade **Clean Architecture** and c
 
 ```
 lib/
+├── glass_ui_kit.dart                  # Single Package Export Module for Developers
 ├── main.dart                          # Application Entry Point (main())
 ├── app.dart                           # Root MaterialApp Configuration (MyApp)
 ├── main_home_screen.dart              # Showcase Home Screen & Reusable Navigation Glass Card
 ├── glass_morphism_ui.dart             # Glassmorphism UI Component & Floating AppBar
 ├── liquid_glass_ui.dart              # Liquid Glass UI Component & GPU Canvas Painter
-├── glass_ui_contracts.dart            # Root Contract Export Module
+├── src/                               # Reusable Glass Library Modules
+│   ├── glass_container.dart           # GlassContainer & LiquidGlassContainer Widgets
+│   ├── glass_ui_style.dart            # GlassUIStyle Enum
+│   └── glass_widget_extension.dart    # Widget.asGlass() & Widget.asLiquidGlass() Extensions
 └── core/                              # Core Architecture & OOP Modules
     ├── glass_navigation_controller.dart # Reactive Controller, Immutable State & Commands
     ├── glass_scope.dart                 # Scoped InheritedWidget Dependency Injection
@@ -72,6 +110,7 @@ test/                                  # Unit & Widget Test Suite
 ├── main_screen_test.dart              # Main HomeScreen Navigation Tests
 ├── glass_morphism_ui_test.dart        # GlassmorphismUI Widget Tests
 ├── liquid_glass_ui_test.dart          # LiquidGlassUI Widget Tests
+├── glass_ui_kit_test.dart             # GlassUIKit Extension & Container Tests
 ├── unit_and_painter_test.dart         # Data Model & CustomPainter Unit Tests
 └── widget_test.dart                   # Master Unit/Widget Test Suite Runner
 
@@ -110,59 +149,6 @@ integration_test/                      # End-to-End Integration Test Suite
    # or for FVM
    fvm flutter run
    ```
-
----
-
-## 📦 Component Usage Example
-
-You can easily integrate `LiquidGlassUI` or `GlassmorphismUI` into your own Flutter project:
-
-```dart
-import 'package:flutter/material.dart';
-import 'package:glass_bottom_bar_ui/liquid_glass_ui.dart';
-
-class MyScreen extends StatelessWidget {
-  const MyScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const LiquidGlassUI(
-      pages: [
-        Center(child: Text('Home')),
-        Center(child: Text('Search')),
-        Center(child: Text('Favorites')),
-        Center(child: Text('Profile')),
-      ],
-      items: [
-        BottomNavigationItem(
-          selectedIcon: Icons.home,
-          unselectedIcon: Icons.home_outlined,
-          label: 'Home',
-          index: 0,
-        ),
-        BottomNavigationItem(
-          selectedIcon: Icons.search,
-          unselectedIcon: Icons.search_outlined,
-          label: 'Search',
-          index: 1,
-        ),
-        BottomNavigationItem(
-          selectedIcon: Icons.favorite,
-          unselectedIcon: Icons.favorite_border,
-          label: 'Favorites',
-          index: 2,
-        ),
-        BottomNavigationItem(
-          selectedIcon: Icons.person,
-          unselectedIcon: Icons.person_outline,
-          label: 'Profile',
-          index: 3,
-        ),
-      ],
-    );
-  }
-}
-```
 
 ---
 
