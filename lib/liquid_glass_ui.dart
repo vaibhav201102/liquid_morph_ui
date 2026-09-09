@@ -1,19 +1,14 @@
 import 'dart:math' as math;
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-import 'core/glass_navigation_controller.dart';
-import 'core/glass_scope.dart';
-import 'core/glass_ui_contracts.dart';
+import 'package:liquid_glass_ui/glass_ui_contracts.dart';
+import 'package:liquid_glass_ui/src/glass_app_bar.dart';
 
 /// Liquid Glass UI Screen implementing [GlassUIContract].
 ///
-/// ADVANCED ENTERPRISE OOP PATTERNS:
-/// 1. Clean Architecture (Separation of BLoC / Controller & Presentation Layer)
-/// 2. Observer Pattern (Reactive [GlassNavigationController] state updates)
-/// 3. Dependency Injection (Scoped [GlassScope] InheritedWidget)
-/// 4. Command Pattern ([SelectTabCommand], [DragUpdateCommand], [DragEndCommand])
-/// 5. Custom Canvas Strategy Pattern ([_LiquidGlassPainter])
+/// Fully customizable from the outside:
+/// - Pass custom [appBar] or [title]
+/// - Pass custom [leading] or [actions]
 class LiquidGlassUI extends StatefulWidget implements GlassUIContract {
   @override
   final List<Widget> pages;
@@ -21,11 +16,35 @@ class LiquidGlassUI extends StatefulWidget implements GlassUIContract {
   @override
   final List<BottomNavigationItem> items;
 
+  /// Custom preferred size AppBar passed from outside (optional).
+  final PreferredSizeWidget? appBar;
+
+  /// Custom title text displayed in default Glass AppBar (optional).
+  final String? title;
+
+  /// Custom title widget displayed in default Glass AppBar (optional).
+  final Widget? titleWidget;
+
+  /// Custom leading widget displayed in default Glass AppBar (optional).
+  final Widget? leading;
+
+  /// Custom action widgets displayed in default Glass AppBar (optional).
+  final List<Widget>? actions;
+
+  /// Whether to display the default back button in Glass AppBar.
+  final bool showBackButton;
+
   /// Creates a [LiquidGlassUI] widget.
   const LiquidGlassUI({
     super.key,
     required this.pages,
     required this.items,
+    this.appBar,
+    this.title,
+    this.titleWidget,
+    this.leading,
+    this.actions,
+    this.showBackButton = true,
   });
 
   @override
@@ -107,106 +126,13 @@ class _LiquidGlassUIState extends State<LiquidGlassUI>
   }
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(64.0),
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(28.0),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: _blurSigma, sigmaY: _blurSigma),
-              child: Container(
-                height: 56.0,
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.10),
-                  borderRadius: BorderRadius.circular(28.0),
-                  border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.30),
-                    width: 1.2,
-                  ),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x3038BDF8),
-                      blurRadius: 12,
-                      spreadRadius: -2,
-                    ),
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    InkWell(
-                      key: const ValueKey('liquid_app_bar_back_button'),
-                      borderRadius: BorderRadius.circular(20.0),
-                      onTap: () => Navigator.of(context).pop(),
-                      child: Container(
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white.withValues(alpha: 0.15),
-                          border: Border.all(
-                            color: Colors.white.withValues(alpha: 0.35),
-                            width: 1.0,
-                          ),
-                        ),
-                        child: const Icon(
-                          Icons.arrow_back_ios_new,
-                          color: Colors.white,
-                          size: 16,
-                        ),
-                      ),
-                    ),
-                    const Gap(12.0),
-                    const Text(
-                      'Liquid Glass UI',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Spacer(),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0,
-                        vertical: 4.0,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.0),
-                        color: Colors.white.withValues(alpha: 0.12),
-                        border: Border.all(
-                          color: const Color(0x8038BDF8),
-                          width: 1.0,
-                        ),
-                      ),
-                      child: const Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.water_drop,
-                            size: 12,
-                            color: Color(0xFF38BDF8),
-                          ),
-                          Gap(4.0),
-                          Text(
-                            'Fluid',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 11,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+    if (widget.appBar != null) return widget.appBar!;
+    return GlassAppBar.liquid(
+      title: widget.title,
+      titleWidget: widget.titleWidget,
+      leading: widget.leading,
+      actions: widget.actions,
+      showBackButton: widget.showBackButton,
     );
   }
 

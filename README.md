@@ -1,4 +1,4 @@
-# 🔮 Glass UI Showcase - Flutter Glassmorphism & Liquid Glass
+# 🔮 Liquid Glass UI - Flutter Glassmorphism & Liquid Glass Kit
 
 ![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter)
 ![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?logo=dart)
@@ -25,23 +25,52 @@ A modern, high-performance Flutter showcase and reusable library demonstrating t
 
 ---
 
-## 🧩 Reusable Library & Extensions (`glass_ui_kit.dart`)
+## 🧩 Reusable Library, AppBars & Extensions (`glass_ui_kit.dart`)
 
-Any developer can easily apply Glassmorphism or Liquid Glass to **ANY** widget or container using direct extension methods or reusable container wrappers:
+Developers can easily customize and use standalone **Glass AppBars**, **Glass Containers**, or **Widget Extensions**:
 
-### 1. Extension Methods on `Widget`
+### 1. Standalone Customizable `GlassAppBar`
+Pass `title`, `leftButtons`, `rightButtons`, `backgroundColor`, and `blur` effortlessly:
+
 ```dart
-import 'package:glass_bottom_bar_ui/glass_ui_kit.dart';
+import 'package:liquid_glass_ui/glass_ui_kit.dart';
 
-// Turn ANY widget into Frosted Glass in 1 line
-Text('Frosted Card').asGlass(blur: 15.0);
+// Classic Glassmorphism AppBar
+GlassAppBar(
+  title: 'Dashboard',
+  leftButtons: [
+    IconButton(icon: const Icon(Icons.menu, color: Colors.white), onPressed: () {}),
+  ],
+  rightButtons: [
+    IconButton(icon: const Icon(Icons.search, color: Colors.white), onPressed: () {}),
+    IconButton(icon: const Icon(Icons.notifications, color: Colors.white), onPressed: () {}),
+  ],
+);
 
-// Turn ANY widget into Liquid Glass in 1 line
-Text('Liquid Card').asLiquidGlass(glowColor: Color(0x3038BDF8));
+// Liquid Glass Styled AppBar
+GlassAppBar.liquid(
+  title: 'Fluid Dashboard',
+  rightButtons: [
+    IconButton(icon: const Icon(Icons.settings, color: Colors.white), onPressed: () {}),
+  ],
+);
 ```
 
-### 2. Reusable Glass Container Wrappers
+### 2. Extension Methods on `Widget`
 ```dart
+import 'package:liquid_glass_ui/glass_ui_kit.dart';
+
+// Turn ANY widget into Frosted Glass in 1 line
+const Text('Frosted Card').asGlass(blur: 15.0);
+
+// Turn ANY widget into Liquid Glass in 1 line
+const Text('Liquid Card').asLiquidGlass(glowColor: Color(0x3038BDF8));
+```
+
+### 3. Reusable Glass Container Wrappers
+```dart
+import 'package:liquid_glass_ui/glass_ui_kit.dart';
+
 // Reusable Glassmorphism Container
 GlassContainer(
   blur: 15.0,
@@ -52,9 +81,28 @@ GlassContainer(
 // Reusable Liquid Glass Container
 LiquidGlassContainer(
   blur: 18.0,
-  glowColor: Color(0x3038BDF8),
+  glowColor: const Color(0x3038BDF8),
   child: MyWidget(),
 );
+```
+
+### 4. Customizable Full Navigation Views
+Customize title text, actions, and left buttons directly from `LiquidGlassUI` or `GlassmorphismUI`:
+
+```dart
+import 'package:liquid_glass_ui/glass_ui_kit.dart';
+
+LiquidGlassUI(
+  title: 'My Custom App',
+  actions: [
+    IconButton(
+      icon: const Icon(Icons.settings, color: Colors.white),
+      onPressed: () {},
+    ),
+  ],
+  pages: myPages,
+  items: myItems,
+)
 ```
 
 ---
@@ -98,6 +146,7 @@ lib/
 ├── glass_morphism_ui.dart             # Glassmorphism UI Component & Floating AppBar
 ├── liquid_glass_ui.dart              # Liquid Glass UI Component & GPU Canvas Painter
 ├── src/                               # Reusable Glass Library Modules
+│   ├── glass_app_bar.dart             # GlassAppBar & GlassAppBar.liquid Standalone Widgets
 │   ├── glass_container.dart           # GlassContainer & LiquidGlassContainer Widgets
 │   ├── glass_ui_style.dart            # GlassUIStyle Enum
 │   └── glass_widget_extension.dart    # Widget.asGlass() & Widget.asLiquidGlass() Extensions
@@ -110,7 +159,7 @@ test/                                  # Unit & Widget Test Suite
 ├── main_screen_test.dart              # Main HomeScreen Navigation Tests
 ├── glass_morphism_ui_test.dart        # GlassmorphismUI Widget Tests
 ├── liquid_glass_ui_test.dart          # LiquidGlassUI Widget Tests
-├── glass_ui_kit_test.dart             # GlassUIKit Extension & Container Tests
+├── glass_ui_kit_test.dart             # GlassUIKit Extension, Container & AppBar Tests
 ├── unit_and_painter_test.dart         # Data Model & CustomPainter Unit Tests
 └── widget_test.dart                   # Master Unit/Widget Test Suite Runner
 
@@ -130,25 +179,17 @@ integration_test/                      # End-to-End Integration Test Suite
 
 ### Installation
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/your-username/glass_bottom_bar_ui.git
-   cd glass_bottom_bar_ui
-   ```
+```bash
+flutter pub add liquid_glass_ui
+```
 
-2. **Fetch dependencies:**
-   ```bash
-   flutter pub get
-   # or with FVM
-   fvm flutter pub get
-   ```
-
-3. **Run the application:**
-   ```bash
-   flutter run
-   # or for FVM
-   fvm flutter run
-   ```
+Or add to `pubspec.yaml`:
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  liquid_glass_ui: ^1.0.1
+```
 
 ---
 

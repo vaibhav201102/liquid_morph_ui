@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:glass_bottom_bar_ui/app.dart';
-import 'package:glass_bottom_bar_ui/glass_morphism_ui.dart';
-import 'package:glass_bottom_bar_ui/liquid_glass_ui.dart';
-import 'package:glass_bottom_bar_ui/main_home_screen.dart';
+import 'package:liquid_glass_ui/app.dart';
+import 'package:liquid_glass_ui/glass_morphism_ui.dart';
+import 'package:liquid_glass_ui/liquid_glass_ui.dart';
+import 'package:liquid_glass_ui/main_home_screen.dart';
 
 void main() {
   group('MainHomeScreen & MyApp Widget Tests', () {

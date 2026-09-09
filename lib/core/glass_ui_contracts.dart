@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:glass_bottom_bar_ui/liquid_glass_ui.dart';
+import 'package:liquid_glass_ui/liquid_glass_ui.dart';
 
 /// ABSTRACTION & INTERFACE
 /// Contract defining mandatory requirements for any Glass UI variant.

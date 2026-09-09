@@ -1,20 +1,14 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-import 'package:glass_bottom_bar_ui/liquid_glass_ui.dart';
-
-import 'core/glass_navigation_controller.dart';
-import 'core/glass_scope.dart';
-import 'core/glass_ui_contracts.dart';
+import 'package:liquid_glass_ui/glass_ui_contracts.dart';
+import 'package:liquid_glass_ui/liquid_glass_ui.dart';
+import 'package:liquid_glass_ui/src/glass_app_bar.dart';
 
 /// Glassmorphism UI Screen implementing [GlassUIContract].
 ///
-/// ADVANCED ENTERPRISE OOP PATTERNS:
-/// 1. Clean Architecture (UI Presentation vs Domain BLoC / Controller)
-/// 2. Observer Pattern (Reactive [GlassNavigationController] state notifications)
-/// 3. Dependency Injection (Scoped [GlassScope] InheritedWidget)
-/// 4. Command Pattern ([SelectTabCommand], [DragUpdateCommand], [DragEndCommand])
-/// 5. Immutable Value State ([GlassNavigationState] value object)
+/// Fully customizable from the outside:
+/// - Pass custom [appBar] or [title]
+/// - Pass custom [leading] or [actions]
 class GlassmorphismUI extends StatefulWidget implements GlassUIContract {
   @override
   final List<Widget> pages;
@@ -22,11 +16,35 @@ class GlassmorphismUI extends StatefulWidget implements GlassUIContract {
   @override
   final List<BottomNavigationItem> items;
 
+  /// Custom preferred size AppBar passed from outside (optional).
+  final PreferredSizeWidget? appBar;
+
+  /// Custom title text displayed in default Glass AppBar (optional).
+  final String? title;
+
+  /// Custom title widget displayed in default Glass AppBar (optional).
+  final Widget? titleWidget;
+
+  /// Custom leading widget displayed in default Glass AppBar (optional).
+  final Widget? leading;
+
+  /// Custom action widgets displayed in default Glass AppBar (optional).
+  final List<Widget>? actions;
+
+  /// Whether to display the default back button in Glass AppBar.
+  final bool showBackButton;
+
   /// Creates a [GlassmorphismUI] widget.
   const GlassmorphismUI({
     super.key,
     required this.pages,
     required this.items,
+    this.appBar,
+    this.title,
+    this.titleWidget,
+    this.leading,
+    this.actions,
+    this.showBackButton = true,
   });
 
   @override
@@ -91,51 +109,13 @@ class _GlassmorphismUIState extends State<GlassmorphismUI> {
   }
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(64.0),
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(24.0),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: _blurSigma, sigmaY: _blurSigma),
-              child: Container(
-                height: 56.0,
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                decoration: GlassThemeFactory.createShellDecoration(
-                  color: const Color(0x1FFFFFFF),
-                  borderColor: const Color(0x40FFFFFF),
-                  borderRadius: 24.0,
-                  borderWidth: 1.2,
-                ),
-                child: Row(
-                  children: [
-                    IconButton(
-                      key: const ValueKey('glass_app_bar_back_button'),
-                      icon: const Icon(
-                        Icons.arrow_back_ios_new,
-                        color: Colors.white,
-                        size: 18,
-                      ),
-                      onPressed: () => Navigator.of(context).pop(),
-                    ),
-                    const Gap(8.0),
-                    const Text(
-                      'Glassmorphism UI',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+    if (widget.appBar != null) return widget.appBar!;
+    return GlassAppBar(
+      title: widget.title,
+      titleWidget: widget.titleWidget,
+      leading: widget.leading,
+      actions: widget.actions,
+      showBackButton: widget.showBackButton,
     );
   }
 

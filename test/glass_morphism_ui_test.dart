@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:glass_bottom_bar_ui/glass_morphism_ui.dart';
-import 'package:glass_bottom_bar_ui/liquid_glass_ui.dart';
+import 'package:liquid_glass_ui/glass_morphism_ui.dart';
+import 'package:liquid_glass_ui/liquid_glass_ui.dart';
 
 void main() {
   group('GlassmorphismUI Widget Tests', () {
@@ -42,11 +42,15 @@ void main() {
     Widget buildTestWidget({
       List<Widget> pages = samplePages,
       List<BottomNavigationItem> items = sampleItems,
+      String? title,
+      List<Widget>? actions,
     }) {
       return MaterialApp(
         home: GlassmorphismUI(
           pages: pages,
           items: items,
+          title: title,
+          actions: actions,
         ),
       );
     }
@@ -63,6 +67,23 @@ void main() {
       expect(find.byIcon(Icons.search_outlined), findsOneWidget);
       expect(find.byIcon(Icons.favorite_border), findsOneWidget);
       expect(find.byIcon(Icons.person_outline), findsOneWidget);
+    });
+
+    testWidgets('Renders custom AppBar title and action widgets passed from outside', (
+      WidgetTester tester,
+    ) async {
+      await tester.pumpWidget(
+        buildTestWidget(
+          title: 'Custom Glassmorphism Title',
+          actions: [
+            const Icon(Icons.settings, key: ValueKey('custom_settings_icon')),
+          ],
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('Custom Glassmorphism Title'), findsOneWidget);
+      expect(find.byKey(const ValueKey('custom_settings_icon')), findsOneWidget);
     });
 
     testWidgets('Tapping search tab switches active page to Search Screen', (
@@ -112,7 +133,7 @@ void main() {
       expect(find.text('Home Screen'), findsOneWidget);
     });
 
-    testWidgets('Empty items list renders SizedBox placeholder', (
+    testWidgets('Empty items list renders Offstage placeholder', (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(
@@ -121,7 +142,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(GlassmorphismUI), findsOneWidget);
-      expect(find.byType(SizedBox), findsWidgets);
+      expect(find.byType(Offstage), findsWidgets);
     });
 
     testWidgets('Horizontal drag gesture across bottom bar updates tab selection', (

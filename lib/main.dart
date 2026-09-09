@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:glass_bottom_bar_ui/app.dart';
+import 'package:liquid_glass_ui/app.dart';
 
-export 'package:glass_bottom_bar_ui/app.dart';
-export 'package:glass_bottom_bar_ui/main_home_screen.dart';
+export 'package:liquid_glass_ui/app.dart';
+export 'package:liquid_glass_ui/main_home_screen.dart';
 
 /// Main application entry point.
 void main() {

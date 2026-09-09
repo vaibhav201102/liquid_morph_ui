@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:glass_bottom_bar_ui/glass_ui_kit.dart';
+import 'package:liquid_glass_ui/glass_ui_kit.dart';
 
 void main() {
   runApp(const ExampleGlassApp());
 }
 
-/// Root example application showcasing Glassmorphism and Liquid Glass.
+/// Root example application showcasing Glassmorphism, Liquid Glass, and standalone GlassAppBar.
 class ExampleGlassApp extends StatelessWidget {
   const ExampleGlassApp({super.key});
 
@@ -27,7 +27,7 @@ class ExampleGlassApp extends StatelessWidget {
   }
 }
 
-/// Main example hub screen offering live previews of both Glass UI styles.
+/// Main example hub screen offering live previews of both Glass UI styles and customizable Glass AppBars.
 class ExampleHomeScreen extends StatelessWidget {
   const ExampleHomeScreen({super.key});
 
@@ -149,7 +149,7 @@ class ExampleHomeScreen extends StatelessWidget {
                   ),
                   const Gap(8.0),
                   Text(
-                    'Tap a card below to experience the UI style',
+                    'Tap a card below to preview customized AppBars & Navigation UIs',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 14,
@@ -158,13 +158,23 @@ class ExampleHomeScreen extends StatelessWidget {
                   ),
                   const Spacer(),
 
-                  // Glassmorphism Demo Button (Using .asGlass Extension)
+                  // Option 1: Glassmorphism UI with Custom AppBar Title & Actions
                   InkWell(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => const GlassmorphismUI(
+                          builder: (_) => GlassmorphismUI(
+                            title: 'Frosted Dashboard',
+                            actions: [
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.notifications_none,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {},
+                              ),
+                            ],
                             pages: _samplePages,
                             items: _sampleItems,
                           ),
@@ -193,7 +203,7 @@ class ExampleHomeScreen extends StatelessWidget {
                               ),
                               Gap(4.0),
                               Text(
-                                'Classic frosted glass depth & static blur',
+                                'Classic frosted glass with custom AppBar actions',
                                 style: TextStyle(
                                   fontSize: 13,
                                   color: Colors.white70,
@@ -216,13 +226,23 @@ class ExampleHomeScreen extends StatelessWidget {
 
                   const Gap(20.0),
 
-                  // Liquid Glass Demo Button (Using .asLiquidGlass Extension)
+                  // Option 2: Liquid Glass UI with Custom Right Buttons
                   InkWell(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => const LiquidGlassUI(
+                          builder: (_) => LiquidGlassUI(
+                            title: 'Fluid Dashboard',
+                            actions: [
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.settings_outlined,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {},
+                              ),
+                            ],
                             pages: _samplePages,
                             items: _sampleItems,
                           ),
@@ -251,7 +271,7 @@ class ExampleHomeScreen extends StatelessWidget {
                               ),
                               Gap(4.0),
                               Text(
-                                'Dynamic behavior-driven glass with light refraction',
+                                'Dynamic liquid glass with custom settings action',
                                 style: TextStyle(
                                   fontSize: 13,
                                   color: Colors.white70,
@@ -273,7 +293,133 @@ class ExampleHomeScreen extends StatelessWidget {
                     ),
                   ),
 
+                  const Gap(20.0),
+
+                  // Option 3: Standalone Custom GlassAppBar Screen Demo
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const StandaloneAppBarDemoScreen(),
+                        ),
+                      );
+                    },
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.web_asset,
+                          size: 28,
+                          color: Color(0xFFA855F7),
+                        ),
+                        const Gap(16.0),
+                        const Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Standalone GlassAppBar',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Gap(4.0),
+                              Text(
+                                'Plug-and-play GlassAppBar in standard Scaffold',
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: Colors.white70,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Icon(
+                          Icons.arrow_forward_ios,
+                          size: 16,
+                          color: Colors.white70,
+                        ),
+                      ],
+                    ).asGlass(
+                      borderRadius: BorderRadius.circular(20.0),
+                      padding: const EdgeInsets.all(20.0),
+                    ),
+                  ),
+
                   const Spacer(),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Demonstration of standalone [GlassAppBar.liquid] inside a standard Scaffold.
+class StandaloneAppBarDemoScreen extends StatelessWidget {
+  const StandaloneAppBarDemoScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: GlassAppBar.liquid(
+        title: 'Standalone GlassAppBar',
+        rightButtons: [
+          IconButton(
+            icon: const Icon(Icons.search, color: Colors.white),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.notifications, color: Colors.white),
+            onPressed: () {},
+          ),
+        ],
+      ),
+      body: Stack(
+        children: [
+          const Positioned.fill(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xFF0F172A),
+                    Color(0xFF1E1B4B),
+                    Color(0xFF311042),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
+            ),
+          ),
+          Center(
+            child: GlassContainer(
+              padding: const EdgeInsets.all(24.0),
+              borderRadius: BorderRadius.circular(24.0),
+              child: const Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.check_circle, size: 48, color: Color(0xFF38BDF8)),
+                  Gap(12.0),
+                  Text(
+                    'Standalone GlassAppBar Demo',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Gap(8.0),
+                  Text(
+                    'Custom leftButtons & rightButtons passed directly!',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 14, color: Colors.white70),
+                  ),
                 ],
               ),
             ),

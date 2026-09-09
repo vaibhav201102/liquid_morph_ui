@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:glass_bottom_bar_ui/liquid_glass_ui.dart';
+import 'package:liquid_glass_ui/liquid_glass_ui.dart';
 
 void main() {
   group('LiquidGlassUI Widget Tests', () {
@@ -41,11 +41,15 @@ void main() {
     Widget buildTestWidget({
       List<Widget> pages = samplePages,
       List<BottomNavigationItem> items = sampleItems,
+      String? title,
+      List<Widget>? actions,
     }) {
       return MaterialApp(
         home: LiquidGlassUI(
           pages: pages,
           items: items,
+          title: title,
+          actions: actions,
         ),
       );
     }
@@ -61,6 +65,23 @@ void main() {
       expect(find.text('Home Screen'), findsOneWidget);
       expect(find.byIcon(Icons.home), findsOneWidget);
       expect(find.byIcon(Icons.search_outlined), findsOneWidget);
+    });
+
+    testWidgets('Renders custom AppBar title and action widgets passed from outside', (
+      WidgetTester tester,
+    ) async {
+      await tester.pumpWidget(
+        buildTestWidget(
+          title: 'Custom Dashboard Title',
+          actions: [
+            const Icon(Icons.notifications_none, key: ValueKey('custom_action_icon')),
+          ],
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('Custom Dashboard Title'), findsOneWidget);
+      expect(find.byKey(const ValueKey('custom_action_icon')), findsOneWidget);
     });
 
     testWidgets('Renders GPU CustomPaint layer for liquid glass refraction', (
@@ -119,7 +140,7 @@ void main() {
       expect(find.text('Home Screen'), findsOneWidget);
     });
 
-    testWidgets('Empty items list renders SizedBox placeholder', (
+    testWidgets('Empty items list renders Offstage placeholder', (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(
@@ -128,7 +149,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(LiquidGlassUI), findsOneWidget);
-      expect(find.byType(SizedBox), findsWidgets);
+      expect(find.byType(Offstage), findsWidgets);
     });
 
     testWidgets('Horizontal drag gesture smoothly moves liquid indicator across tabs', (

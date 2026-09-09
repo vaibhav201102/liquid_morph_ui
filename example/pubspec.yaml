@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   gap: ^3.0.1
-  glass_bottom_bar_ui:
+  liquid_glass_ui:
     path: ../
 
 dev_dependencies:
