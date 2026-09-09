@@ -194,7 +194,9 @@ class GlassAppBar extends StatelessWidget implements PreferredSizeWidget {
                   // 1. Left Buttons / Leading
                   if (showBack)
                     IconButton(
-                      key: const ValueKey('liquid_app_bar_back_button'),
+                      key: ValueKey(isLiquid
+                          ? 'liquid_app_bar_back_button'
+                          : 'glass_app_bar_back_button'),
                       icon: Icon(
                         Icons.arrow_back_ios_new,
                         color: Colors.white,

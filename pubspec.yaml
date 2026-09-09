@@ -1,6 +1,6 @@
 name: liquid_morph_ui
 description: "A high-performance Flutter UI kit for Glassmorphism and behavior-driven Liquid Glass bottom navigation bars."
-version: 1.0.1
+version: 1.0.2
 homepage: https://github.com/vaibhavjoshi/liquid_morph_ui
 repository: https://github.com/vaibhavjoshi/liquid_morph_ui
 issue_tracker: https://github.com/vaibhavjoshi/liquid_morph_ui/issues
