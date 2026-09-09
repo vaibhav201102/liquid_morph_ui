@@ -1,0 +1,16 @@
+build
+build/
+**/build/
+.dart_tool/
+.fvm/
+.idea/
+android/.gradle/
+android/app/build/
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/ephemeral/
+ios/Runner.xcworkspace/
+*.iml
+*.apk
+*.aar
+*.aab
