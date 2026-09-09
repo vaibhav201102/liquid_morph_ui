@@ -1,5 +1,5 @@
 name: example
-description: "Example app showcasing liquid_glass_ui_kit package usage."
+description: "Example app showcasing liquid_morph_ui package usage."
 publish_to: 'none'
 
 version: 1.0.0+1
@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   gap: ^3.0.1
-  liquid_glass_ui_kit:
+  liquid_morph_ui:
     path: ../
 
 dev_dependencies:

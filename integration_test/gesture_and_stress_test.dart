@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:liquid_glass_ui_kit/app.dart';
-import 'package:liquid_glass_ui_kit/glass_morphism_ui.dart';
+import 'package:liquid_morph_ui/app.dart';
+import 'package:liquid_morph_ui/glass_morphism_ui.dart';
 import 'package:integration_test/integration_test.dart';
 
 void main() {

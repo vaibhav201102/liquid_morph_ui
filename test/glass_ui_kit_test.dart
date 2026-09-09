@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:liquid_glass_ui_kit/glass_ui_kit.dart';
+import 'package:liquid_morph_ui/glass_ui_kit.dart';
 
 void main() {
   group('GlassUIKit Extension, Container & AppBar Tests', () {

@@ -1,8 +1,8 @@
 import 'dart:math' as math;
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:liquid_glass_ui_kit/glass_ui_contracts.dart';
-import 'package:liquid_glass_ui_kit/src/glass_app_bar.dart';
+import 'package:liquid_morph_ui/glass_ui_contracts.dart';
+import 'package:liquid_morph_ui/src/glass_app_bar.dart';
 
 /// Liquid Glass UI Screen implementing [GlassUIContract].
 ///

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:liquid_glass_ui_kit/main_home_screen.dart';
+import 'package:liquid_morph_ui/main_home_screen.dart';
 
 /// Root application widget configuring global MaterialApp theme and home route.
 class MyApp extends StatelessWidget {

@@ -1,4 +1,4 @@
-# 🔮 Liquid Glass UI - Flutter Glassmorphism & Liquid Glass Kit
+# 🔮 Liquid Morph UI - Flutter Glassmorphism & Liquid Glass Kit
 
 ![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter)
 ![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?logo=dart)
@@ -33,7 +33,7 @@ Developers can easily customize and use standalone **Glass AppBars**, **Glass Co
 Pass `title`, `leftButtons`, `rightButtons`, `backgroundColor`, and `blur` effortlessly:
 
 ```dart
-import 'package:liquid_glass_ui/glass_ui_kit.dart';
+import 'package:liquid_morph_ui/glass_ui_kit.dart';
 
 // Classic Glassmorphism AppBar
 GlassAppBar(
@@ -58,7 +58,7 @@ GlassAppBar.liquid(
 
 ### 2. Extension Methods on `Widget`
 ```dart
-import 'package:liquid_glass_ui/glass_ui_kit.dart';
+import 'package:liquid_morph_ui/glass_ui_kit.dart';
 
 // Turn ANY widget into Frosted Glass in 1 line
 const Text('Frosted Card').asGlass(blur: 15.0);
@@ -69,7 +69,7 @@ const Text('Liquid Card').asLiquidGlass(glowColor: Color(0x3038BDF8));
 
 ### 3. Reusable Glass Container Wrappers
 ```dart
-import 'package:liquid_glass_ui/glass_ui_kit.dart';
+import 'package:liquid_morph_ui/glass_ui_kit.dart';
 
 // Reusable Glassmorphism Container
 GlassContainer(
@@ -90,7 +90,7 @@ LiquidGlassContainer(
 Customize title text, actions, and left buttons directly from `LiquidGlassUI` or `GlassmorphismUI`:
 
 ```dart
-import 'package:liquid_glass_ui/glass_ui_kit.dart';
+import 'package:liquid_morph_ui/glass_ui_kit.dart';
 
 LiquidGlassUI(
   title: 'My Custom App',
@@ -112,14 +112,14 @@ LiquidGlassUI(
 This codebase is structured around production-grade **Clean Architecture** and classic **Gof Design Patterns**:
 
 1. **Clean Architecture (Controller / BLoC vs Presentation)**:
-   - Business logic, touch gestures, and physics state are encapsulated in [`GlassNavigationController`](file:///Users/vaibhav/StudioProjects/glass_bottom_bar_ui/lib/core/glass_navigation_controller.dart), leaving UI widgets as pure presentation layers.
-2. **Immutable Value State ([`GlassNavigationState`](class://GlassNavigationState))**:
+   - Business logic, touch gestures, and physics state are encapsulated in `GlassNavigationController`, leaving UI widgets as pure presentation layers.
+2. **Immutable Value State (`GlassNavigationState`)**:
    - Encapsulates active tab indices, drag coordinates, animation progress, and interaction flags into an immutable value object featuring `copyWith()`, value equality (`==`), and `hashCode`.
-3. **Command Pattern ([`GlassNavigationCommand`](class://GlassNavigationCommand))**:
-   - Encapsulates user interactions as executable commands: [`SelectTabCommand`](class://SelectTabCommand), [`DragUpdateCommand`](class://DragUpdateCommand), and [`DragEndCommand`](class://DragEndCommand).
-4. **Observer Pattern & Scoped Dependency Injection ([`GlassScope`](class://GlassScope))**:
+3. **Command Pattern (`GlassNavigationCommand`)**:
+   - Encapsulates user interactions as executable commands: `SelectTabCommand`, `DragUpdateCommand`, and `DragEndCommand`.
+4. **Observer Pattern & Scoped Dependency Injection (`GlassScope`)**:
    - Uses an `InheritedNotifier` scope providing scoped dependency injection of the state controller down the widget tree with reactive frame notifications.
-5. **Strategy Pattern ([`GlassNavigationEngine`](class://GlassNavigationEngine))**:
+5. **Strategy Pattern (`GlassNavigationEngine`)**:
    - Abstract engine strategy interface allowing dynamic swapping of tab physics and rendering strategies.
 6. **Optimized LOC & Beginner-Friendly Comments**:
    - Reduced overall lines of code by **40–60%** while adding clear, educational inline comments explaining every widget, state variable, and calculation.
@@ -180,7 +180,7 @@ integration_test/                      # End-to-End Integration Test Suite
 ### Installation
 
 ```bash
-flutter pub add liquid_glass_ui
+flutter pub add liquid_morph_ui
 ```
 
 Or add to `pubspec.yaml`:
@@ -188,7 +188,7 @@ Or add to `pubspec.yaml`:
 dependencies:
   flutter:
     sdk: flutter
-  liquid_glass_ui: ^1.0.1
+  liquid_morph_ui: ^1.0.0
 ```
 
 ---
