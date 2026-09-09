@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:liquid_glass_ui/glass_ui_kit.dart';
+import 'package:liquid_glass_ui_kit/glass_ui_kit.dart';
 
 void main() {
   runApp(const ExampleGlassApp());

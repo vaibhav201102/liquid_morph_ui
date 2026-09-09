@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:liquid_glass_ui/core/glass_navigation_controller.dart';
+import 'package:liquid_glass_ui_kit/core/glass_navigation_controller.dart';
 
 /// DEPENDENCY INJECTION & SCOPE PATTERN
 /// Injects [GlassNavigationController] reactively down the BuildContext tree.

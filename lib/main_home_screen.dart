@@ -1,8 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:liquid_glass_ui/glass_morphism_ui.dart';
-import 'package:liquid_glass_ui/liquid_glass_ui.dart';
+import 'package:liquid_glass_ui_kit/glass_morphism_ui.dart';
+import 'package:liquid_glass_ui_kit/liquid_glass_ui.dart';
 
 /// Sample Data Provider
 /// Provides mock screens and navigation icons for demonstration.

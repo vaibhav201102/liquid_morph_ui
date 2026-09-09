@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:liquid_glass_ui/src/glass_ui_style.dart';
+import 'package:liquid_glass_ui_kit/src/glass_ui_style.dart';
 
 /// A customizable floating Glass AppBar supporting both Glassmorphism and Liquid Glass UI styles.
 ///
