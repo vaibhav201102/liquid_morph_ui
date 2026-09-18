@@ -108,7 +108,7 @@ class GlassAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     final effectiveBgColor = backgroundColor ??
         (isLiquid
-            ? Colors.white.withValues(alpha: 0.10)
+            ? Colors.transparent
             : Colors.white.withValues(alpha: 0.12));
 
     final effectiveBorderColor = borderColor ??

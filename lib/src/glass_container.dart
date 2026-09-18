@@ -94,7 +94,7 @@ class LiquidGlassContainer extends StatelessWidget {
   /// Corner radius for the container.
   final BorderRadius? borderRadius;
 
-  /// Translucent background fill color.
+  /// Translucent background fill color (defaults to transparent for 100% glass clarity).
   final Color? color;
 
   /// Cyan liquid glow shadow color.
@@ -129,7 +129,7 @@ class LiquidGlassContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final effectiveRadius = borderRadius ?? BorderRadius.circular(24.0);
-    final effectiveColor = color ?? Colors.white.withValues(alpha: 0.10);
+    final effectiveColor = color ?? Colors.transparent;
 
     return Container(
       width: width,

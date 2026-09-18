@@ -20,7 +20,7 @@ void runAppTests() {
       await tester.pumpAndSettle();
 
       // 1. Verify Home Screen loaded
-      expect(find.text('Glass UI Showcase'), findsOneWidget);
+      expect(find.text('Liquid Morph UI'), findsOneWidget);
       expect(find.byKey(const ValueKey('glassmorphism_card_button')), findsOneWidget);
 
       // 2. Navigate to Glassmorphism UI
@@ -65,7 +65,7 @@ void runAppTests() {
       await tester.pumpAndSettle();
 
       // 1. Verify Home Screen loaded
-      expect(find.text('Glass UI Showcase'), findsOneWidget);
+      expect(find.text('Liquid Morph UI'), findsOneWidget);
       expect(find.byKey(const ValueKey('liquid_glass_card_button')), findsOneWidget);
 
       // 2. Navigate to Liquid Glass UI

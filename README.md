@@ -3,38 +3,110 @@
 ![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter)
 ![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?logo=dart)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
+![Pub Version](https://img.shields.io/pub/v/liquid_morph_ui?logo=flutter)
 ![Platform](https://img.shields.io/badge/Platform-iOS%20%7C%20Android%20%7C%20macOS%20%7C%20Web-blue)
 
-A modern, high-performance Flutter showcase and reusable library demonstrating two cutting-edge glass UI paradigms: **Classic Glassmorphism** and **Behavior-Driven Liquid Glass**, engineered with enterprise-grade **Clean Architecture** and **OOP Design Patterns**.
+A modern, high-performance Flutter showcase and reusable UI kit demonstrating two cutting-edge glass UI paradigms: **Classic Glassmorphism** and **Behavior-Driven Liquid Glass**, engineered with enterprise-grade **Clean Architecture** and **OOP Design Patterns**.
 
 ---
 
-## 🌟 Interface Design Paradigms
+## 🌟 Glass UI Component Suite (`glass_ui_kit.dart`)
 
-### 1. ❄️ Classic Glassmorphism UI
-- **Static Depth & Frosted Blur**: Fixed backdrop blur (`sigma 15`), translucent container fill (`12% opacity`), and subtle specular borders.
-- **Floating Glass AppBar**: Custom floating frosted glass app bar with back navigation.
-- **Smooth Tab Selection**: Linear position interpolation and tab switching.
+Developers can easily integrate standalone **Glass AppBars**, **Glass Buttons**, **Glass Switches**, **Glass Cards**, **Glass TextFields**, or **Widget Extensions**:
 
-### 2. 💧 Dynamic Liquid Glass UI
-- **Behavior-Driven Material**: Dynamically refracts light and responds to user drag coordinates and velocity in real time.
-- **120 FPS GPU Canvas Painter**: Renders light sheen, cyan liquid glow (`0x4038BDF8`), and radial specular highlights directly on Canvas with zero-rebuild backdrop filtering.
-- **Viscous Shape Deformation**: Capsule indicator deforms (stretches up to 20% horizontally and compresses vertically) during fast movements, simulating fluid surface tension.
-- **Spring Physics**: Bouncing spring response (`Cubic(0.25, 1.15, 0.3, 1.0)`) on tab arrival.
-- **Hardware-Accelerated Page Transitions**: Integrated `PageView` for native GPU compositor layer sliding.
-
----
-
-## 🧩 Reusable Library, AppBars & Extensions (`glass_ui_kit.dart`)
-
-Developers can easily customize and use standalone **Glass AppBars**, **Glass Containers**, or **Widget Extensions**:
-
-### 1. Standalone Customizable `GlassAppBar`
-Pass `title`, `leftButtons`, `rightButtons`, `backgroundColor`, and `blur` effortlessly:
+### 1. Dynamic Per-Tab AppBar Titles (`titles: List<String>`)
+Pass custom titles directly per tab index or let the AppBar automatically switch between `"Dashboard"`, `"Search"`, `"Favorites"`, and `"Profile"`:
 
 ```dart
 import 'package:liquid_morph_ui/glass_ui_kit.dart';
 
+// Liquid Glass UI with Custom Titles per Tab
+LiquidGlassUI(
+  titles: const [
+    'Dashboard',     // Tab Index 0 (Home)
+    'Search Items',  // Tab Index 1 (Search)
+    'My Favorites',  // Tab Index 2 (Favorites)
+    'User Profile',  // Tab Index 3 (Profile)
+  ],
+  pages: myPages,
+  items: myItems,
+);
+```
+
+### 2. Pure Crystal Transparency in Liquid Glass
+`LiquidGlassUI`, `LiquidGlassBottomNavBar`, `LiquidGlassCard`, and `LiquidGlassContainer` support 100% crystal transparency (`Colors.transparent`), allowing background gradients to shine through while active cyan liquid pills, specular sheen highlights, and icons float dynamically above the glass surface.
+
+### 3. Standalone Glass Buttons (`GlassButton` & `LiquidGlassButton`)
+Interactive buttons with frosted glass depth, glow shadows, and press animations:
+
+```dart
+// Classic Glassmorphism Button
+GlassButton(
+  label: 'Frosted Glass Button',
+  icon: Icons.auto_awesome,
+  onTap: () {},
+);
+
+// Liquid Glass Button with Cyan Glow
+LiquidGlassButton(
+  label: 'Liquid Glass Button',
+  icon: Icons.water_drop,
+  glowColor: Color(0x4038BDF8),
+  onTap: () {},
+);
+```
+
+### 4. Standalone Glass Toggle Switches (`GlassSwitch` & `LiquidGlassSwitch`)
+Animated glass toggle switches with zero-clipping `AnimatedAlign` slider controls:
+
+```dart
+// Classic Glass Switch
+GlassSwitch(
+  value: isEnabled,
+  onChanged: (val) => setState(() => isEnabled = val),
+);
+
+// Liquid Glass Glow Switch
+LiquidGlassSwitch(
+  value: isEnabled,
+  activeGlowColor: Color(0xFF38BDF8),
+  onChanged: (val) => setState(() => isEnabled = val),
+);
+```
+
+### 5. Standalone Glass Input Text Fields (`GlassTextField` & `LiquidGlassTextField`)
+Glass text fields with frosted borders and focus glow shadows:
+
+```dart
+// Glassmorphism Input Field
+GlassTextField(
+  hintText: 'Search anything...',
+  prefixIcon: Icons.search,
+);
+
+// Liquid Glass Input Field with Focus Glow
+LiquidGlassTextField(
+  hintText: 'Enter password...',
+  prefixIcon: Icons.lock_outline,
+  obscureText: true,
+  focusGlowColor: Color(0xFF38BDF8),
+);
+```
+
+### 6. Standalone Glass Cards (`GlassCard` & `LiquidGlassCard`)
+```dart
+GlassCard(
+  child: Text('Frosted Glass Card Content'),
+);
+
+LiquidGlassCard(
+  glowColor: Color(0x3038BDF8),
+  child: Text('Liquid Glass Card Content'),
+);
+```
+
+### 7. Standalone Customizable `GlassAppBar`
+```dart
 // Classic Glassmorphism AppBar
 GlassAppBar(
   title: 'Dashboard',
@@ -43,7 +115,6 @@ GlassAppBar(
   ],
   rightButtons: [
     IconButton(icon: const Icon(Icons.search, color: Colors.white), onPressed: () {}),
-    IconButton(icon: const Icon(Icons.notifications, color: Colors.white), onPressed: () {}),
   ],
 );
 
@@ -56,53 +127,13 @@ GlassAppBar.liquid(
 );
 ```
 
-### 2. Extension Methods on `Widget`
+### 8. Extension Methods on `Widget`
 ```dart
-import 'package:liquid_morph_ui/glass_ui_kit.dart';
-
 // Turn ANY widget into Frosted Glass in 1 line
 const Text('Frosted Card').asGlass(blur: 15.0);
 
 // Turn ANY widget into Liquid Glass in 1 line
 const Text('Liquid Card').asLiquidGlass(glowColor: Color(0x3038BDF8));
-```
-
-### 3. Reusable Glass Container Wrappers
-```dart
-import 'package:liquid_morph_ui/glass_ui_kit.dart';
-
-// Reusable Glassmorphism Container
-GlassContainer(
-  blur: 15.0,
-  borderRadius: BorderRadius.circular(20.0),
-  child: MyWidget(),
-);
-
-// Reusable Liquid Glass Container
-LiquidGlassContainer(
-  blur: 18.0,
-  glowColor: const Color(0x3038BDF8),
-  child: MyWidget(),
-);
-```
-
-### 4. Customizable Full Navigation Views
-Customize title text, actions, and left buttons directly from `LiquidGlassUI` or `GlassmorphismUI`:
-
-```dart
-import 'package:liquid_morph_ui/glass_ui_kit.dart';
-
-LiquidGlassUI(
-  title: 'My Custom App',
-  actions: [
-    IconButton(
-      icon: const Icon(Icons.settings, color: Colors.white),
-      onPressed: () {},
-    ),
-  ],
-  pages: myPages,
-  items: myItems,
-)
 ```
 
 ---
@@ -121,8 +152,8 @@ This codebase is structured around production-grade **Clean Architecture** and c
    - Uses an `InheritedNotifier` scope providing scoped dependency injection of the state controller down the widget tree with reactive frame notifications.
 5. **Strategy Pattern (`GlassNavigationEngine`)**:
    - Abstract engine strategy interface allowing dynamic swapping of tab physics and rendering strategies.
-6. **Optimized LOC & Beginner-Friendly Comments**:
-   - Reduced overall lines of code by **40–60%** while adding clear, educational inline comments explaining every widget, state variable, and calculation.
+6. **Automated GitHub Actions CI/CD (`.github/workflows/ci_cd.yml`)**:
+   - Runs automated formatting checks, static analysis, unit/widget tests, package dry-run validation, and automated publishing to `pub.dev` with automatic version git tagging on success.
 
 ---
 
@@ -147,7 +178,12 @@ lib/
 ├── liquid_glass_ui.dart              # Liquid Glass UI Component & GPU Canvas Painter
 ├── src/                               # Reusable Glass Library Modules
 │   ├── glass_app_bar.dart             # GlassAppBar & GlassAppBar.liquid Standalone Widgets
-│   ├── glass_container.dart           # GlassContainer & LiquidGlassContainer Widgets
+│   ├── glass_bottom_navigation_bar.dart# Standalone Glass Navigation Bars
+│   ├── glass_button.dart              # GlassButton & LiquidGlassButton
+│   ├── glass_card.dart                # GlassCard & LiquidGlassCard
+│   ├── glass_container.dart           # GlassContainer & LiquidGlassContainer
+│   ├── glass_switch.dart              # GlassSwitch & LiquidGlassSwitch
+│   ├── glass_text_field.dart          # GlassTextField & LiquidGlassTextField
 │   ├── glass_ui_style.dart            # GlassUIStyle Enum
 │   └── glass_widget_extension.dart    # Widget.asGlass() & Widget.asLiquidGlass() Extensions
 └── core/                              # Core Architecture & OOP Modules
@@ -159,7 +195,7 @@ test/                                  # Unit & Widget Test Suite
 ├── main_screen_test.dart              # Main HomeScreen Navigation Tests
 ├── glass_morphism_ui_test.dart        # GlassmorphismUI Widget Tests
 ├── liquid_glass_ui_test.dart          # LiquidGlassUI Widget Tests
-├── glass_ui_kit_test.dart             # GlassUIKit Extension, Container & AppBar Tests
+├── glass_ui_kit_test.dart             # GlassUIKit Component Suite Tests
 ├── unit_and_painter_test.dart         # Data Model & CustomPainter Unit Tests
 └── widget_test.dart                   # Master Unit/Widget Test Suite Runner
 
@@ -188,7 +224,7 @@ Or add to `pubspec.yaml`:
 dependencies:
   flutter:
     sdk: flutter
-  liquid_morph_ui: ^1.0.3
+  liquid_morph_ui: ^1.0.4
 ```
 
 ---

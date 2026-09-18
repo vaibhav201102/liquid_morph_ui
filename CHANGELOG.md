@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.4
+
+- **Pure Crystal Transparency**: Enhanced `LiquidGlassUI`, `LiquidGlassBottomNavBar`, `LiquidGlassCard`, `LiquidGlassContainer`, and `GlassAppBar.liquid` to support 100% crystal glass transparency (`Colors.transparent`).
+- **Dynamic Tab-Driven AppBar Titles**: Added support for `titles: List<String>` allowing developers to pass custom titles per tab or let the AppBar dynamically switch between "Dashboard", "Search", "Favorites", and "Profile".
+- **Expanded Component Suites & ListViews**:
+  - Embedded 60 unique items in `_categories` Search ListViews and `_favorites` Favorites ListViews with smooth `BouncingScrollPhysics()`.
+  - Added dedicated `GlassmorphismProfileContent` and `LiquidGlassProfileContent` screens featuring static circular glass profile avatars, user info cards, account settings options, and logout buttons.
+- **GitHub Actions Automated CI/CD Pipeline**: Added `.github/workflows/ci_cd.yml` workflow for automated linting, formatting, unit test verification, pub.dev dry-run validation, and automated publishing to `pub.dev`.
+
 ## 1.0.3
 
 - Updated `homepage`, `repository`, and `issue_tracker` URLs to `https://github.com/vaibhav201102/liquid_morph_ui`.

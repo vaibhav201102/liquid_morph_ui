@@ -7,7 +7,8 @@ import 'package:liquid_morph_ui/src/glass_app_bar.dart';
 /// Glassmorphism UI Screen implementing [GlassUIContract].
 ///
 /// Fully customizable from the outside:
-/// - Pass custom [appBar] or [title]
+/// - Pass custom [titles] list per tab index or single [title]
+/// - Pass custom [appBar] or [titleWidget]
 /// - Pass custom [leading] or [actions]
 class GlassmorphismUI extends StatefulWidget implements GlassUIContract {
   @override
@@ -18,6 +19,9 @@ class GlassmorphismUI extends StatefulWidget implements GlassUIContract {
 
   /// Custom preferred size AppBar passed from outside (optional).
   final PreferredSizeWidget? appBar;
+
+  /// List of custom titles displayed per tab index (optional).
+  final List<String>? titles;
 
   /// Custom title text displayed in default Glass AppBar (optional).
   final String? title;
@@ -40,6 +44,7 @@ class GlassmorphismUI extends StatefulWidget implements GlassUIContract {
     required this.pages,
     required this.items,
     this.appBar,
+    this.titles,
     this.title,
     this.titleWidget,
     this.leading,
@@ -88,8 +93,10 @@ class _GlassmorphismUIState extends State<GlassmorphismUI> {
         valueListenable: _controller,
         builder: (context, state, _) {
           return Scaffold(
+            backgroundColor: Colors.transparent,
             extendBody: true,
-            appBar: _buildAppBar(context),
+            extendBodyBehindAppBar: true,
+            appBar: _buildAppBar(context, state.selectedIndex),
             body: Stack(
               children: [
                 const Positioned.fill(
@@ -108,10 +115,23 @@ class _GlassmorphismUIState extends State<GlassmorphismUI> {
     );
   }
 
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
+  PreferredSizeWidget _buildAppBar(BuildContext context, int selectedIndex) {
     if (widget.appBar != null) return widget.appBar!;
+
+    final String dynamicTitle;
+    if (widget.titles != null && selectedIndex < widget.titles!.length) {
+      dynamicTitle = widget.titles![selectedIndex];
+    } else if (widget.title != null) {
+      dynamicTitle = widget.title!;
+    } else if (selectedIndex < widget.items.length) {
+      final label = widget.items[selectedIndex].label;
+      dynamicTitle = label.toLowerCase() == 'home' ? 'Dashboard' : label;
+    } else {
+      dynamicTitle = 'Glassmorphism UI';
+    }
+
     return GlassAppBar(
-      title: widget.title,
+      title: dynamicTitle,
       titleWidget: widget.titleWidget,
       leading: widget.leading,
       actions: widget.actions,

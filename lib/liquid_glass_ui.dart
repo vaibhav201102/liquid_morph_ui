@@ -7,7 +7,8 @@ import 'package:liquid_morph_ui/src/glass_app_bar.dart';
 /// Liquid Glass UI Screen implementing [GlassUIContract].
 ///
 /// Fully customizable from the outside:
-/// - Pass custom [appBar] or [title]
+/// - Pass custom [titles] list per tab index or single [title]
+/// - Pass custom [appBar] or [titleWidget]
 /// - Pass custom [leading] or [actions]
 class LiquidGlassUI extends StatefulWidget implements GlassUIContract {
   @override
@@ -18,6 +19,9 @@ class LiquidGlassUI extends StatefulWidget implements GlassUIContract {
 
   /// Custom preferred size AppBar passed from outside (optional).
   final PreferredSizeWidget? appBar;
+
+  /// List of custom titles displayed per tab index (optional).
+  final List<String>? titles;
 
   /// Custom title text displayed in default Glass AppBar (optional).
   final String? title;
@@ -40,6 +44,7 @@ class LiquidGlassUI extends StatefulWidget implements GlassUIContract {
     required this.pages,
     required this.items,
     this.appBar,
+    this.titles,
     this.title,
     this.titleWidget,
     this.leading,
@@ -104,8 +109,10 @@ class _LiquidGlassUIState extends State<LiquidGlassUI>
         valueListenable: _controller,
         builder: (context, state, _) {
           return Scaffold(
+            backgroundColor: Colors.transparent,
             extendBody: true,
-            appBar: _buildAppBar(context),
+            extendBodyBehindAppBar: true,
+            appBar: _buildAppBar(context, state.selectedIndex),
             body: Stack(
               children: [
                 const Positioned.fill(
@@ -125,10 +132,23 @@ class _LiquidGlassUIState extends State<LiquidGlassUI>
     );
   }
 
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
+  PreferredSizeWidget _buildAppBar(BuildContext context, int selectedIndex) {
     if (widget.appBar != null) return widget.appBar!;
+
+    final String dynamicTitle;
+    if (widget.titles != null && selectedIndex < widget.titles!.length) {
+      dynamicTitle = widget.titles![selectedIndex];
+    } else if (widget.title != null) {
+      dynamicTitle = widget.title!;
+    } else if (selectedIndex < widget.items.length) {
+      final label = widget.items[selectedIndex].label;
+      dynamicTitle = label.toLowerCase() == 'home' ? 'Dashboard' : label;
+    } else {
+      dynamicTitle = 'Liquid Glass UI';
+    }
+
     return GlassAppBar.liquid(
-      title: widget.title,
+      title: dynamicTitle,
       titleWidget: widget.titleWidget,
       leading: widget.leading,
       actions: widget.actions,
@@ -150,7 +170,7 @@ class _LiquidGlassUIState extends State<LiquidGlassUI>
             child: Container(
               height: 72.0,
               decoration: GlassThemeFactory.createShellDecoration(
-                color: Colors.white.withValues(alpha: 0.08),
+                color: Colors.transparent,
                 borderColor: Colors.white.withValues(alpha: 0.20),
                 borderRadius: 50.0,
                 borderWidth: 1.2,

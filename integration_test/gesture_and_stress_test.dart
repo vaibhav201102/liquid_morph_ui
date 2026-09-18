@@ -120,7 +120,7 @@ void runGestureAndStressTests() {
       await tester.pumpWidget(const MyApp());
       await tester.pumpAndSettle();
 
-      expect(find.text('Glass UI Showcase'), findsOneWidget);
+      expect(find.text('Liquid Morph UI'), findsOneWidget);
 
       await tester.tap(find.byKey(const ValueKey('liquid_glass_card_button')));
       await tester.pumpAndSettle();

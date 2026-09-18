@@ -42,6 +42,7 @@ void main() {
       List<Widget> pages = samplePages,
       List<BottomNavigationItem> items = sampleItems,
       String? title,
+      List<String>? titles,
       List<Widget>? actions,
     }) {
       return MaterialApp(
@@ -49,6 +50,7 @@ void main() {
           pages: pages,
           items: items,
           title: title,
+          titles: titles,
           actions: actions,
         ),
       );
@@ -60,11 +62,29 @@ void main() {
       await tester.pumpWidget(buildTestWidget());
       await tester.pumpAndSettle();
 
-      expect(find.text('Liquid Glass UI'), findsOneWidget);
+      expect(find.text('Dashboard'), findsOneWidget);
       expect(find.text('Fluid'), findsOneWidget);
       expect(find.text('Home Screen'), findsOneWidget);
       expect(find.byIcon(Icons.home), findsOneWidget);
       expect(find.byIcon(Icons.search_outlined), findsOneWidget);
+    });
+
+    testWidgets('Renders custom titles list per tab index in LiquidGlassUI', (
+      WidgetTester tester,
+    ) async {
+      await tester.pumpWidget(
+        buildTestWidget(
+          titles: const ['Custom Home', 'Custom Search', 'Custom Fav', 'Custom Profile'],
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('Custom Home'), findsOneWidget);
+
+      await tester.tap(find.byIcon(Icons.search_outlined));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Custom Search'), findsOneWidget);
     });
 
     testWidgets('Renders custom AppBar title and action widgets passed from outside', (

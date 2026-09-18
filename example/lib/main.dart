@@ -6,7 +6,7 @@ void main() {
   runApp(const ExampleGlassApp());
 }
 
-/// Root example application showcasing Glassmorphism, Liquid Glass, and standalone GlassAppBar.
+/// Root example application showcasing Glassmorphism, Liquid Glass, and Glass UI Components.
 class ExampleGlassApp extends StatelessWidget {
   const ExampleGlassApp({super.key});
 
@@ -27,79 +27,9 @@ class ExampleGlassApp extends StatelessWidget {
   }
 }
 
-/// Main example hub screen offering live previews of both Glass UI styles and customizable Glass AppBars.
+/// Main example hub screen offering live previews of all Glass UI components.
 class ExampleHomeScreen extends StatelessWidget {
   const ExampleHomeScreen({super.key});
-
-  static const List<Widget> _samplePages = [
-    Center(
-      child: Text(
-        'Home Screen',
-        style: TextStyle(
-          fontSize: 22,
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
-    Center(
-      child: Text(
-        'Search Screen',
-        style: TextStyle(
-          fontSize: 22,
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
-    Center(
-      child: Text(
-        'Favorites Screen',
-        style: TextStyle(
-          fontSize: 22,
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
-    Center(
-      child: Text(
-        'Profile Screen',
-        style: TextStyle(
-          fontSize: 22,
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
-  ];
-
-  static const List<BottomNavigationItem> _sampleItems = [
-    BottomNavigationItem(
-      selectedIcon: Icons.home,
-      unselectedIcon: Icons.home_outlined,
-      label: 'Home',
-      index: 0,
-    ),
-    BottomNavigationItem(
-      selectedIcon: Icons.search,
-      unselectedIcon: Icons.search_outlined,
-      label: 'Search',
-      index: 1,
-    ),
-    BottomNavigationItem(
-      selectedIcon: Icons.favorite,
-      unselectedIcon: Icons.favorite_border,
-      label: 'Favorites',
-      index: 2,
-    ),
-    BottomNavigationItem(
-      selectedIcon: Icons.person,
-      unselectedIcon: Icons.person_outline,
-      label: 'Profile',
-      index: 3,
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +69,7 @@ class ExampleHomeScreen extends StatelessWidget {
                   ),
                   const Gap(12.0),
                   const Text(
-                    'Glass UI Kit Examples',
+                    'Liquid Morph UI',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 28,
@@ -149,7 +79,7 @@ class ExampleHomeScreen extends StatelessWidget {
                   ),
                   const Gap(8.0),
                   Text(
-                    'Tap a card below to preview customized AppBars & Navigation UIs',
+                    'Select an interface design style below to explore its live components & dashboard',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 14,
@@ -158,14 +88,19 @@ class ExampleHomeScreen extends StatelessWidget {
                   ),
                   const Spacer(),
 
-                  // Option 1: Glassmorphism UI with Custom AppBar Title & Actions
+                  // Option 1: Glassmorphism UI (Renders dynamic titles: Dashboard, Search, Favorites, Profile)
                   InkWell(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (_) => GlassmorphismUI(
-                            title: 'Frosted Dashboard',
+                            titles: const [
+                              'Dashboard',
+                              'Search',
+                              'Favorites',
+                              'Profile',
+                            ],
                             actions: [
                               IconButton(
                                 icon: const Icon(
@@ -175,8 +110,8 @@ class ExampleHomeScreen extends StatelessWidget {
                                 onPressed: () {},
                               ),
                             ],
-                            pages: _samplePages,
-                            items: _sampleItems,
+                            pages: AppSampleData.glassmorphismPages,
+                            items: AppSampleData.items,
                           ),
                         ),
                       );
@@ -203,7 +138,7 @@ class ExampleHomeScreen extends StatelessWidget {
                               ),
                               Gap(4.0),
                               Text(
-                                'Classic frosted glass with custom AppBar actions',
+                                'Frosted dashboard with Glass Buttons, Switches & TextFields',
                                 style: TextStyle(
                                   fontSize: 13,
                                   color: Colors.white70,
@@ -224,16 +159,21 @@ class ExampleHomeScreen extends StatelessWidget {
                     ),
                   ),
 
-                  const Gap(20.0),
+                  const Gap(16.0),
 
-                  // Option 2: Liquid Glass UI with Custom Right Buttons
+                  // Option 2: Liquid Glass UI (Renders dynamic titles: Dashboard, Search, Favorites, Profile)
                   InkWell(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (_) => LiquidGlassUI(
-                            title: 'Fluid Dashboard',
+                            titles: const [
+                              'Dashboard',
+                              'Search',
+                              'Favorites',
+                              'Profile',
+                            ],
                             actions: [
                               IconButton(
                                 icon: const Icon(
@@ -243,8 +183,8 @@ class ExampleHomeScreen extends StatelessWidget {
                                 onPressed: () {},
                               ),
                             ],
-                            pages: _samplePages,
-                            items: _sampleItems,
+                            pages: AppSampleData.liquidPages,
+                            items: AppSampleData.items,
                           ),
                         ),
                       );
@@ -271,7 +211,7 @@ class ExampleHomeScreen extends StatelessWidget {
                               ),
                               Gap(4.0),
                               Text(
-                                'Dynamic liquid glass with custom settings action',
+                                'Liquid glass dashboard with Liquid Buttons & Glow Switches',
                                 style: TextStyle(
                                   fontSize: 13,
                                   color: Colors.white70,
@@ -293,7 +233,7 @@ class ExampleHomeScreen extends StatelessWidget {
                     ),
                   ),
 
-                  const Gap(20.0),
+                  const Gap(16.0),
 
                   // Option 3: Standalone Custom GlassAppBar Screen Demo
                   InkWell(
@@ -318,7 +258,7 @@ class ExampleHomeScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Standalone GlassAppBar',
+                                'Standalone Glass Components',
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -327,7 +267,7 @@ class ExampleHomeScreen extends StatelessWidget {
                               ),
                               Gap(4.0),
                               Text(
-                                'Plug-and-play GlassAppBar in standard Scaffold',
+                                'Independent GlassAppBar & LiquidGlassBottomNavBar',
                                 style: TextStyle(
                                   fontSize: 13,
                                   color: Colors.white70,
@@ -359,23 +299,49 @@ class ExampleHomeScreen extends StatelessWidget {
   }
 }
 
-/// Demonstration of standalone [GlassAppBar.liquid] inside a standard Scaffold.
-class StandaloneAppBarDemoScreen extends StatelessWidget {
+/// Demonstration of standalone [GlassAppBar.liquid] and [LiquidGlassBottomNavBar] working independently.
+class StandaloneAppBarDemoScreen extends StatefulWidget {
   const StandaloneAppBarDemoScreen({super.key});
+
+  @override
+  State<StandaloneAppBarDemoScreen> createState() =>
+      _StandaloneAppBarDemoScreenState();
+}
+
+class _StandaloneAppBarDemoScreenState
+    extends State<StandaloneAppBarDemoScreen> {
+  int _selectedIndex = 0;
+
+  static final List<Widget> _pages = [
+    const LiquidGlassHomePageContent(title: 'Standalone Glass Dashboard'),
+    const Center(
+      child: Text(
+        'Standalone Search Page',
+        style: TextStyle(color: Colors.white, fontSize: 20),
+      ),
+    ),
+    const Center(
+      child: Text(
+        'Standalone Profile Page',
+        style: TextStyle(color: Colors.white, fontSize: 20),
+      ),
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
+      extendBody: true,
       extendBodyBehindAppBar: true,
       appBar: GlassAppBar.liquid(
-        title: 'Standalone GlassAppBar',
+        title: 'Standalone Glass Demo',
         rightButtons: [
           IconButton(
-            icon: const Icon(Icons.search, color: Colors.white),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.notifications, color: Colors.white),
+            icon: const Icon(
+              Icons.notifications_outlined,
+              color: Colors.white,
+            ),
             onPressed: () {},
           ),
         ],
@@ -397,32 +363,33 @@ class StandaloneAppBarDemoScreen extends StatelessWidget {
               ),
             ),
           ),
-          Center(
-            child: GlassContainer(
-              padding: const EdgeInsets.all(24.0),
-              borderRadius: BorderRadius.circular(24.0),
-              child: const Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.check_circle, size: 48, color: Color(0xFF38BDF8)),
-                  Gap(12.0),
-                  Text(
-                    'Standalone GlassAppBar Demo',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Gap(8.0),
-                  Text(
-                    'Custom leftButtons & rightButtons passed directly!',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 14, color: Colors.white70),
-                  ),
-                ],
-              ),
-            ),
+          SafeArea(
+            bottom: false,
+            child: _pages[_selectedIndex],
+          ),
+        ],
+      ),
+      bottomNavigationBar: LiquidGlassBottomNavBar(
+        selectedIndex: _selectedIndex,
+        onTap: (index) => setState(() => _selectedIndex = index),
+        items: const [
+          BottomNavigationItem(
+            selectedIcon: Icons.home,
+            unselectedIcon: Icons.home_outlined,
+            label: 'Home',
+            index: 0,
+          ),
+          BottomNavigationItem(
+            selectedIcon: Icons.search,
+            unselectedIcon: Icons.search_outlined,
+            label: 'Search',
+            index: 1,
+          ),
+          BottomNavigationItem(
+            selectedIcon: Icons.person,
+            unselectedIcon: Icons.person_outline,
+            label: 'Profile',
+            index: 2,
           ),
         ],
       ),

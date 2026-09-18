@@ -13,13 +13,13 @@ void main() {
       await tester.pumpWidget(const MyApp());
       await tester.pumpAndSettle();
 
-      expect(find.text('Glass UI Showcase'), findsOneWidget);
+      expect(find.text('Liquid Morph UI'), findsOneWidget);
       expect(
-        find.text('Select an interface design style below to preview'),
+        find.text('Select an interface design style below to explore its live components & dashboard'),
         findsOneWidget,
       );
-      expect(find.text('Glassmorphism UI'), findsOneWidget);
-      expect(find.text('Liquid Glass UI'), findsOneWidget);
+      expect(find.text('Glassmorphism UI View'), findsOneWidget);
+      expect(find.text('Liquid Glass UI View'), findsOneWidget);
     });
 
     testWidgets('Tapping Glassmorphism UI card navigates to GlassmorphismUI screen', (
@@ -28,7 +28,7 @@ void main() {
       await tester.pumpWidget(const MyApp());
       await tester.pumpAndSettle();
 
-      final glassmorphismCard = find.text('Glassmorphism UI');
+      final glassmorphismCard = find.text('Glassmorphism UI View');
       expect(glassmorphismCard, findsOneWidget);
 
       await tester.tap(glassmorphismCard);
@@ -52,7 +52,7 @@ void main() {
       await tester.pumpWidget(const MyApp());
       await tester.pumpAndSettle();
 
-      final liquidGlassCard = find.text('Liquid Glass UI');
+      final liquidGlassCard = find.text('Liquid Glass UI View');
       expect(liquidGlassCard, findsOneWidget);
 
       await tester.tap(liquidGlassCard);
