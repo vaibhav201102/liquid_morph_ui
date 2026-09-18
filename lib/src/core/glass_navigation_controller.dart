@@ -156,7 +156,8 @@ class GlassNavigationController extends ValueNotifier<GlassNavigationState> {
   /// Concludes drag gesture and snaps to nearest tab.
   void endDrag(double barWidth, double itemWidth) {
     if (value.dragX == null) return;
-    final calculatedIndex = (value.dragX! / itemWidth).floor().clamp(0, itemCount - 1);
+    final calculatedIndex =
+        (value.dragX! / itemWidth).floor().clamp(0, itemCount - 1);
     final targetX = (calculatedIndex * itemWidth) + (itemWidth / 2);
 
     value = value.copyWith(

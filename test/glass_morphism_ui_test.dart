@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:liquid_morph_ui/glass_morphism_ui.dart';
-import 'package:liquid_morph_ui/liquid_glass_ui.dart';
+import 'package:liquid_morph_ui/glass_ui_kit.dart';
 
 void main() {
   group('GlassmorphismUI Widget Tests', () {

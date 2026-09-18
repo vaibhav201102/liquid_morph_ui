@@ -62,7 +62,8 @@ void main() {
       expect(find.byType(GlassContainer), findsOneWidget);
     });
 
-    testWidgets('Applies .asLiquidGlass() widget extension method successfully', (
+    testWidgets('Applies .asLiquidGlass() widget extension method successfully',
+        (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(
@@ -80,7 +81,9 @@ void main() {
       expect(find.byType(LiquidGlassContainer), findsOneWidget);
     });
 
-    testWidgets('Renders standalone GlassAppBar with custom title, leftButtons and rightButtons', (
+    testWidgets(
+        'Renders standalone GlassAppBar with custom title, leftButtons and rightButtons',
+        (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(
@@ -125,10 +128,13 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Liquid Title'), findsOneWidget);
-      expect(find.byKey(const ValueKey('liquid_settings_icon')), findsOneWidget);
+      expect(
+          find.byKey(const ValueKey('liquid_settings_icon')), findsOneWidget);
     });
 
-    testWidgets('Renders standalone GlassBottomNavigationBar in bottomNavigationBar slot', (
+    testWidgets(
+        'Renders standalone GlassBottomNavigationBar in bottomNavigationBar slot',
+        (
       WidgetTester tester,
     ) async {
       int selectedIndex = 0;
@@ -173,7 +179,9 @@ void main() {
       expect(find.text('Active Index: 1'), findsOneWidget);
     });
 
-    testWidgets('Renders standalone LiquidGlassBottomNavBar in bottomNavigationBar slot', (
+    testWidgets(
+        'Renders standalone LiquidGlassBottomNavBar in bottomNavigationBar slot',
+        (
       WidgetTester tester,
     ) async {
       int selectedIndex = 0;
@@ -349,7 +357,9 @@ void main() {
       expect(find.text('Card Content B'), findsOneWidget);
     });
 
-    testWidgets('Renders GlassTextField and LiquidGlassTextField accepting text input', (
+    testWidgets(
+        'Renders GlassTextField and LiquidGlassTextField accepting text input',
+        (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(
@@ -389,7 +399,9 @@ void main() {
       expect(find.text('Logout Account'), findsOneWidget);
     });
 
-    testWidgets('Renders LiquidGlassProfileContent with cyan glowing avatar and options', (
+    testWidgets(
+        'Renders LiquidGlassProfileContent with cyan glowing avatar and options',
+        (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(
@@ -408,7 +420,8 @@ void main() {
       expect(find.text('Logout Account'), findsOneWidget);
     });
 
-    testWidgets('Renders GlassmorphismSearchContent with tags and category list', (
+    testWidgets(
+        'Renders GlassmorphismSearchContent with tags and category list', (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(
@@ -425,7 +438,8 @@ void main() {
       expect(find.byType(GlassCard), findsWidgets);
     });
 
-    testWidgets('Renders LiquidGlassSearchContent with tags and liquid category list', (
+    testWidgets(
+        'Renders LiquidGlassSearchContent with tags and liquid category list', (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(

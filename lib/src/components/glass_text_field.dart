@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 /// Reusable Glassmorphism input TextField component.
@@ -177,9 +178,8 @@ class _LiquidGlassTextFieldState extends State<LiquidGlassTextField> {
                 prefixIcon: widget.prefixIcon != null
                     ? Icon(
                         widget.prefixIcon,
-                        color: _isFocused
-                            ? widget.focusGlowColor
-                            : Colors.white70,
+                        color:
+                            _isFocused ? widget.focusGlowColor : Colors.white70,
                         size: 20,
                       )
                     : null,

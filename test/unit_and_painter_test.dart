@@ -31,7 +31,8 @@ void main() {
       controller.dispose();
     });
 
-    test('DragUpdateCommand and DragEndCommand handle touch gesture pipeline', () {
+    test('DragUpdateCommand and DragEndCommand handle touch gesture pipeline',
+        () {
       final controller = GlassNavigationController(itemCount: 4);
 
       // 1. Update drag position
@@ -84,7 +85,8 @@ void main() {
   });
 
   group('GlassScope Unit & Widget Tests', () {
-    testWidgets('GlassScope provides GlassNavigationController down widget tree', (
+    testWidgets(
+        'GlassScope provides GlassNavigationController down widget tree', (
       WidgetTester tester,
     ) async {
       final controller = GlassNavigationController(itemCount: 3);
@@ -96,7 +98,8 @@ void main() {
             child: Builder(
               builder: (context) {
                 final scopedController = GlassScope.of(context);
-                return Text('Active Index: ${scopedController.value.selectedIndex}');
+                return Text(
+                    'Active Index: ${scopedController.value.selectedIndex}');
               },
             ),
           ),

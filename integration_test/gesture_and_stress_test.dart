@@ -26,7 +26,8 @@ void runGestureAndStressTests() {
       expect(find.text('Profile Screen'), findsOneWidget);
 
       // Pop back to home
-      await tester.tap(find.byKey(const ValueKey('liquid_app_bar_back_button')));
+      await tester
+          .tap(find.byKey(const ValueKey('liquid_app_bar_back_button')));
       await tester.pumpAndSettle();
 
       // Re-enter Liquid Glass UI -> Must start on Home Screen (index 0)
@@ -36,7 +37,8 @@ void runGestureAndStressTests() {
       expect(find.text('Home Screen'), findsOneWidget);
 
       // Clean pop
-      await tester.tap(find.byKey(const ValueKey('liquid_app_bar_back_button')));
+      await tester
+          .tap(find.byKey(const ValueKey('liquid_app_bar_back_button')));
       await tester.pumpAndSettle();
     });
 
@@ -59,7 +61,8 @@ void runGestureAndStressTests() {
 
       expect(find.text('Profile Screen'), findsOneWidget);
 
-      await tester.tap(find.byKey(const ValueKey('liquid_app_bar_back_button')));
+      await tester
+          .tap(find.byKey(const ValueKey('liquid_app_bar_back_button')));
       await tester.pumpAndSettle();
     });
 
@@ -72,7 +75,8 @@ void runGestureAndStressTests() {
       await tester.tap(find.byKey(const ValueKey('liquid_glass_card_button')));
       await tester.pumpAndSettle();
 
-      final navBar = find.byKey(const ValueKey('liquid_bottom_nav_bar_gesture'));
+      final navBar =
+          find.byKey(const ValueKey('liquid_bottom_nav_bar_gesture'));
 
       // Extreme left out-of-bounds drag
       await tester.drag(navBar, const Offset(-1000.0, 0.0));
@@ -86,7 +90,8 @@ void runGestureAndStressTests() {
 
       expect(find.text('Profile Screen'), findsOneWidget);
 
-      await tester.tap(find.byKey(const ValueKey('liquid_app_bar_back_button')));
+      await tester
+          .tap(find.byKey(const ValueKey('liquid_app_bar_back_button')));
       await tester.pumpAndSettle();
     });
 
@@ -132,7 +137,8 @@ void runGestureAndStressTests() {
       await tester.pumpAndSettle();
       expect(find.text('Search Screen'), findsOneWidget);
 
-      await tester.tap(find.byKey(const ValueKey('liquid_app_bar_back_button')));
+      await tester
+          .tap(find.byKey(const ValueKey('liquid_app_bar_back_button')));
       await tester.pumpAndSettle();
 
       // Reset view size

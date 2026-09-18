@@ -1,9 +1,10 @@
 import 'dart:math' as math;
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:liquid_morph_ui/core/glass_navigation_controller.dart';
-import 'package:liquid_morph_ui/core/glass_ui_contracts.dart';
-import 'package:liquid_morph_ui/liquid_glass_ui.dart';
+import 'package:liquid_morph_ui/src/core/glass_navigation_controller.dart';
+import 'package:liquid_morph_ui/src/core/glass_ui_contracts.dart';
+import 'package:liquid_morph_ui/src/models/bottom_navigation_item.dart';
 
 /// Standalone Glassmorphism Bottom Navigation Bar widget.
 ///
@@ -149,9 +150,10 @@ class _GlassBottomNavigationBarState extends State<GlassBottomNavigationBar> {
                                         key: ValueKey<bool>(
                                           widget.selectedIndex == item.index,
                                         ),
-                                        color: widget.selectedIndex == item.index
-                                            ? Colors.white
-                                            : const Color(0x66FFFFFF),
+                                        color:
+                                            widget.selectedIndex == item.index
+                                                ? Colors.white
+                                                : const Color(0x66FFFFFF),
                                         size: 25.0,
                                       ),
                                     ),
@@ -184,9 +186,8 @@ class _GlassBottomNavigationBarState extends State<GlassBottomNavigationBar> {
     final left = (currentX - (width / 2)).clamp(0.0, maxWidth - width);
 
     return AnimatedPositioned(
-      duration: state.isDragging
-          ? Duration.zero
-          : const Duration(milliseconds: 300),
+      duration:
+          state.isDragging ? Duration.zero : const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
       left: left,
       top: 8,
@@ -356,12 +357,12 @@ class _LiquidGlassBottomNavBarState extends State<LiquidGlassBottomNavBar>
                                     (widget.selectedIndex * itemWidth +
                                         itemWidth / 2);
 
-                                final lightX = (currentX /
-                                        constraints.maxWidth)
+                                final lightX = (currentX / constraints.maxWidth)
                                     .clamp(0.0, 1.0);
 
                                 return CustomPaint(
-                                  size: Size(constraints.maxWidth, widget.height),
+                                  size:
+                                      Size(constraints.maxWidth, widget.height),
                                   painter: _LiquidGlassPainter(
                                     currentCenterX: currentX,
                                     itemWidth: itemWidth,
@@ -377,11 +378,13 @@ class _LiquidGlassBottomNavBarState extends State<LiquidGlassBottomNavBar>
                               children: widget.items.asMap().entries.map((e) {
                                 final index = e.key;
                                 final item = e.value;
-                                final isSelected = widget.selectedIndex == index;
+                                final isSelected =
+                                    widget.selectedIndex == index;
 
                                 return Expanded(
                                   child: InkWell(
-                                    key: ValueKey('liquid_tab_item_${item.index}'),
+                                    key: ValueKey(
+                                        'liquid_tab_item_${item.index}'),
                                     borderRadius: pillRadius,
                                     onTap: () {
                                       SelectTabCommand(
@@ -487,10 +490,8 @@ class _LiquidGlassPainter extends CustomPainter {
     final stretchFactor = isAnimating
         ? (0.20 * math.sin(animValue * math.pi))
         : (isDragging ? 0.10 : 0.0);
-    final indicatorWidth =
-        (itemWidth * 0.72) * (1.0 + stretchFactor);
-    final indicatorHeight =
-        (size.height - 16.0) * (1.0 - stretchFactor * 0.30);
+    final indicatorWidth = (itemWidth * 0.72) * (1.0 + stretchFactor);
+    final indicatorHeight = (size.height - 16.0) * (1.0 - stretchFactor * 0.30);
 
     final left = (currentCenterX - (indicatorWidth / 2)).clamp(
       0.0,

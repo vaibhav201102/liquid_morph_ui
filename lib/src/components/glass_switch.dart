@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 /// Reusable Glassmorphism animated Switch toggle component.
@@ -159,8 +160,7 @@ class LiquidGlassSwitch extends StatelessWidget {
               child: AnimatedAlign(
                 duration: const Duration(milliseconds: 280),
                 curve: Curves.easeOutBack,
-                alignment:
-                    value ? Alignment.centerRight : Alignment.centerLeft,
+                alignment: value ? Alignment.centerRight : Alignment.centerLeft,
                 child: Container(
                   width: thumbSize,
                   height: thumbSize,

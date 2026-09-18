@@ -15,14 +15,16 @@ void main() {
 
       expect(find.text('Liquid Morph UI'), findsOneWidget);
       expect(
-        find.text('Select an interface design style below to explore its live components & dashboard'),
+        find.text(
+            'Select an interface design style below to explore its live components & dashboard'),
         findsOneWidget,
       );
       expect(find.text('Glassmorphism UI View'), findsOneWidget);
       expect(find.text('Liquid Glass UI View'), findsOneWidget);
     });
 
-    testWidgets('Tapping Glassmorphism UI card navigates to GlassmorphismUI screen', (
+    testWidgets(
+        'Tapping Glassmorphism UI card navigates to GlassmorphismUI screen', (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(const MyApp());
@@ -46,7 +48,8 @@ void main() {
       expect(find.byType(MainHomeScreen), findsOneWidget);
     });
 
-    testWidgets('Tapping Liquid Glass UI card navigates to LiquidGlassUI screen', (
+    testWidgets(
+        'Tapping Liquid Glass UI card navigates to LiquidGlassUI screen', (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(const MyApp());

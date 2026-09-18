@@ -168,28 +168,39 @@ This codebase is structured around production-grade **Clean Architecture** and c
 
 ## 📁 Project Architecture
 
-```
+```text
 lib/
-├── glass_ui_kit.dart                  # Single Package Export Module for Developers
-├── main.dart                          # Application Entry Point (main())
+├── liquid_morph_ui.dart               # Primary Package Export Entry Point
+├── glass_ui_kit.dart                  # Alias Export Module (Backward Compatibility)
 ├── app.dart                           # Root MaterialApp Configuration (MyApp)
-├── main_home_screen.dart              # Showcase Home Screen & Reusable Navigation Glass Card
-├── glass_morphism_ui.dart             # Glassmorphism UI Component & Floating AppBar
-├── liquid_glass_ui.dart              # Liquid Glass UI Component & GPU Canvas Painter
-├── src/                               # Reusable Glass Library Modules
-│   ├── glass_app_bar.dart             # GlassAppBar & GlassAppBar.liquid Standalone Widgets
-│   ├── glass_bottom_navigation_bar.dart# Standalone Glass Navigation Bars
-│   ├── glass_button.dart              # GlassButton & LiquidGlassButton
-│   ├── glass_card.dart                # GlassCard & LiquidGlassCard
-│   ├── glass_container.dart           # GlassContainer & LiquidGlassContainer
-│   ├── glass_switch.dart              # GlassSwitch & LiquidGlassSwitch
-│   ├── glass_text_field.dart          # GlassTextField & LiquidGlassTextField
-│   ├── glass_ui_style.dart            # GlassUIStyle Enum
-│   └── glass_widget_extension.dart    # Widget.asGlass() & Widget.asLiquidGlass() Extensions
-└── core/                              # Core Architecture & OOP Modules
-    ├── glass_navigation_controller.dart # Reactive Controller, Immutable State & Commands
-    ├── glass_scope.dart                 # Scoped InheritedWidget Dependency Injection
-    └── glass_ui_contracts.dart          # Abstractions, Interfaces & Strategy Engines
+├── main.dart                          # Application Entry Point
+├── glass_morphism_ui.dart             # Redirect Export to src/screens/
+├── liquid_glass_ui.dart              # Redirect Export to src/screens/
+├── main_home_screen.dart              # Redirect Export to src/screens/
+├── glass_ui_contracts.dart           # Redirect Export to src/core/
+└── src/                               # Internal Implementation Modules
+    ├── core/                          # State Management, Controller & Contracts
+    │   ├── glass_navigation_controller.dart
+    │   ├── glass_scope.dart
+    │   └── glass_ui_contracts.dart
+    ├── models/                        # Immutable Data Models & Enums
+    │   ├── bottom_navigation_item.dart
+    │   └── glass_ui_style.dart
+    ├── components/                    # Reusable Glass UI Components
+    │   ├── glass_app_bar.dart
+    │   ├── glass_bottom_navigation_bar.dart
+    │   ├── glass_button.dart
+    │   ├── glass_card.dart
+    │   ├── glass_container.dart
+    │   ├── glass_navigation_card.dart
+    │   ├── glass_switch.dart
+    │   └── glass_text_field.dart
+    ├── extensions/                    # Extension Methods
+    │   └── glass_widget_extension.dart
+    └── screens/                       # Showcase Pages & Glass Dashboards
+        ├── glass_morphism_ui.dart
+        ├── liquid_glass_ui.dart
+        └── main_home_screen.dart
 
 test/                                  # Unit & Widget Test Suite
 ├── main_screen_test.dart              # Main HomeScreen Navigation Tests

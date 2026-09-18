@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:liquid_morph_ui/liquid_glass_ui.dart';
+import 'package:liquid_morph_ui/glass_ui_kit.dart';
 
 void main() {
   group('LiquidGlassUI Widget Tests', () {
@@ -56,7 +56,8 @@ void main() {
       );
     }
 
-    testWidgets('Renders LiquidGlassUI with liquid AppBar and Fluid status pill', (
+    testWidgets(
+        'Renders LiquidGlassUI with liquid AppBar and Fluid status pill', (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(buildTestWidget());
@@ -74,7 +75,12 @@ void main() {
     ) async {
       await tester.pumpWidget(
         buildTestWidget(
-          titles: const ['Custom Home', 'Custom Search', 'Custom Fav', 'Custom Profile'],
+          titles: const [
+            'Custom Home',
+            'Custom Search',
+            'Custom Fav',
+            'Custom Profile'
+          ],
         ),
       );
       await tester.pumpAndSettle();
@@ -87,14 +93,16 @@ void main() {
       expect(find.text('Custom Search'), findsOneWidget);
     });
 
-    testWidgets('Renders custom AppBar title and action widgets passed from outside', (
+    testWidgets(
+        'Renders custom AppBar title and action widgets passed from outside', (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(
         buildTestWidget(
           title: 'Custom Dashboard Title',
           actions: [
-            const Icon(Icons.notifications_none, key: ValueKey('custom_action_icon')),
+            const Icon(Icons.notifications_none,
+                key: ValueKey('custom_action_icon')),
           ],
         ),
       );
@@ -113,7 +121,8 @@ void main() {
       expect(find.byType(CustomPaint), findsWidgets);
     });
 
-    testWidgets('Tapping search tab animates spring transition to Search Screen', (
+    testWidgets(
+        'Tapping search tab animates spring transition to Search Screen', (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(buildTestWidget());
@@ -129,7 +138,9 @@ void main() {
       expect(find.byIcon(Icons.search), findsOneWidget);
     });
 
-    testWidgets('Tapping favorites tab animates spring transition to Favorites Screen', (
+    testWidgets(
+        'Tapping favorites tab animates spring transition to Favorites Screen',
+        (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(buildTestWidget());
@@ -145,7 +156,9 @@ void main() {
       expect(find.byIcon(Icons.favorite), findsOneWidget);
     });
 
-    testWidgets('Tapping currently active tab retains selection and does not restart animation', (
+    testWidgets(
+        'Tapping currently active tab retains selection and does not restart animation',
+        (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(buildTestWidget());
@@ -172,7 +185,8 @@ void main() {
       expect(find.byType(Offstage), findsWidgets);
     });
 
-    testWidgets('Horizontal drag gesture smoothly moves liquid indicator across tabs', (
+    testWidgets(
+        'Horizontal drag gesture smoothly moves liquid indicator across tabs', (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(buildTestWidget());

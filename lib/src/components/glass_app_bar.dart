@@ -1,7 +1,8 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:liquid_morph_ui/src/glass_ui_style.dart';
+import 'package:liquid_morph_ui/src/models/glass_ui_style.dart';
 
 /// A customizable floating Glass AppBar supporting both Glassmorphism and Liquid Glass UI styles.
 ///
@@ -107,9 +108,7 @@ class GlassAppBar extends StatelessWidget implements PreferredSizeWidget {
     final isLiquid = style == GlassUIStyle.liquidGlass;
 
     final effectiveBgColor = backgroundColor ??
-        (isLiquid
-            ? Colors.transparent
-            : Colors.white.withValues(alpha: 0.12));
+        (isLiquid ? Colors.transparent : Colors.white.withValues(alpha: 0.12));
 
     final effectiveBorderColor = borderColor ??
         (isLiquid
@@ -159,8 +158,9 @@ class GlassAppBar extends StatelessWidget implements PreferredSizeWidget {
               ]
             : null);
 
-    final showBack =
-        showBackButton && canPop && (effectiveLeft == null || effectiveLeft.isEmpty);
+    final showBack = showBackButton &&
+        canPop &&
+        (effectiveLeft == null || effectiveLeft.isEmpty);
 
     return SafeArea(
       child: Padding(
@@ -212,7 +212,10 @@ class GlassAppBar extends StatelessWidget implements PreferredSizeWidget {
                   Expanded(
                     child: titleWidget ??
                         Text(
-                          title ?? (isLiquid ? 'Liquid Glass UI' : 'Glassmorphism UI'),
+                          title ??
+                              (isLiquid
+                                  ? 'Liquid Glass UI'
+                                  : 'Glassmorphism UI'),
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 18,

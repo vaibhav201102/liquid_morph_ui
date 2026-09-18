@@ -2,12 +2,20 @@
 
 ## 1.0.4
 
+- **Modular Domain Directory Restructuring**:
+  - Reorganized package architecture into clean, modular subdirectories under `lib/src/`:
+    - `src/core/`: `glass_navigation_controller.dart`, `glass_scope.dart`, `glass_ui_contracts.dart`.
+    - `src/models/`: `bottom_navigation_item.dart`, `glass_ui_style.dart`.
+    - `src/components/`: `glass_app_bar.dart`, `glass_bottom_navigation_bar.dart`, `glass_button.dart`, `glass_card.dart`, `glass_container.dart`, `glass_navigation_card.dart`, `glass_switch.dart`, `glass_text_field.dart`.
+    - `src/extensions/`: `glass_widget_extension.dart`.
+    - `src/screens/`: `glass_morphism_ui.dart`, `liquid_glass_ui.dart`, `main_home_screen.dart`.
 - **Pure Crystal Transparency**: Enhanced `LiquidGlassUI`, `LiquidGlassBottomNavBar`, `LiquidGlassCard`, `LiquidGlassContainer`, and `GlassAppBar.liquid` to support 100% crystal glass transparency (`Colors.transparent`).
 - **Dynamic Tab-Driven AppBar Titles**: Added support for `titles: List<String>` allowing developers to pass custom titles per tab or let the AppBar dynamically switch between "Dashboard", "Search", "Favorites", and "Profile".
-- **Expanded Component Suites & ListViews**:
-  - Embedded 60 unique items in `_categories` Search ListViews and `_favorites` Favorites ListViews with smooth `BouncingScrollPhysics()`.
-  - Added dedicated `GlassmorphismProfileContent` and `LiquidGlassProfileContent` screens featuring static circular glass profile avatars, user info cards, account settings options, and logout buttons.
-- **GitHub Actions Automated CI/CD Pipeline**: Added `.github/workflows/ci_cd.yml` workflow for automated linting, formatting, unit test verification, pub.dev dry-run validation, and automated publishing to `pub.dev`.
+- **Dedicated Profile Screens**: Added `GlassmorphismProfileContent` and `LiquidGlassProfileContent` featuring static circular glass profile avatars, user info cards, account settings options, and logout buttons.
+- **Dedicated Search Screens & Expanded ListViews**:
+  - Added `GlassmorphismSearchContent` and `LiquidGlassSearchContent` with search fields and filter chips.
+  - Expanded `_categories` Search ListViews and `_favorites` Favorites ListViews to 60 unique items each with smooth `BouncingScrollPhysics()`.
+- **GitHub Actions Automated CI/CD Pipeline & Auto-Tagging**: Added `.github/workflows/ci_cd.yml` workflow for automated linting, formatting, 98 unit/widget test runs, pub.dev dry-run validation, automated publishing, and automatic git version tagging on success.
 
 ## 1.0.3
 

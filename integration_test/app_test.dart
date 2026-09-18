@@ -13,7 +13,9 @@ void main() {
 
 void runAppTests() {
   group('Full Application End-to-End Integration Tests', () {
-    testWidgets('Complete Glassmorphism UI Journey: Launch, Tab Switching, Drag, Back Navigation', (
+    testWidgets(
+        'Complete Glassmorphism UI Journey: Launch, Tab Switching, Drag, Back Navigation',
+        (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(const MyApp());
@@ -21,7 +23,8 @@ void runAppTests() {
 
       // 1. Verify Home Screen loaded
       expect(find.text('Liquid Morph UI'), findsOneWidget);
-      expect(find.byKey(const ValueKey('glassmorphism_card_button')), findsOneWidget);
+      expect(find.byKey(const ValueKey('glassmorphism_card_button')),
+          findsOneWidget);
 
       // 2. Navigate to Glassmorphism UI
       await tester.tap(find.byKey(const ValueKey('glassmorphism_card_button')));
@@ -50,7 +53,8 @@ void runAppTests() {
       await tester.pumpAndSettle();
 
       // 5. Back Navigation
-      final backButton = find.byKey(const ValueKey('glass_app_bar_back_button'));
+      final backButton =
+          find.byKey(const ValueKey('glass_app_bar_back_button'));
       expect(backButton, findsOneWidget);
       await tester.tap(backButton);
       await tester.pumpAndSettle();
@@ -58,7 +62,9 @@ void runAppTests() {
       expect(find.byType(MainHomeScreen), findsOneWidget);
     });
 
-    testWidgets('Complete Liquid Glass UI Journey: Launch, Spring Transitions, Fluid Drag, Back Navigation', (
+    testWidgets(
+        'Complete Liquid Glass UI Journey: Launch, Spring Transitions, Fluid Drag, Back Navigation',
+        (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(const MyApp());
@@ -66,7 +72,8 @@ void runAppTests() {
 
       // 1. Verify Home Screen loaded
       expect(find.text('Liquid Morph UI'), findsOneWidget);
-      expect(find.byKey(const ValueKey('liquid_glass_card_button')), findsOneWidget);
+      expect(find.byKey(const ValueKey('liquid_glass_card_button')),
+          findsOneWidget);
 
       // 2. Navigate to Liquid Glass UI
       await tester.tap(find.byKey(const ValueKey('liquid_glass_card_button')));
@@ -90,13 +97,15 @@ void runAppTests() {
       expect(find.text('Profile Screen'), findsOneWidget);
 
       // 4. Fluid Drag Gesture
-      final liquidNavBar = find.byKey(const ValueKey('liquid_bottom_nav_bar_gesture'));
+      final liquidNavBar =
+          find.byKey(const ValueKey('liquid_bottom_nav_bar_gesture'));
       expect(liquidNavBar, findsOneWidget);
       await tester.drag(liquidNavBar, const Offset(-220.0, 0.0));
       await tester.pumpAndSettle();
 
       // 5. Back Navigation via Liquid Glass AppBar back button
-      final circularBackButton = find.byKey(const ValueKey('liquid_app_bar_back_button'));
+      final circularBackButton =
+          find.byKey(const ValueKey('liquid_app_bar_back_button'));
       expect(circularBackButton, findsOneWidget);
       await tester.tap(circularBackButton);
       await tester.pumpAndSettle();
@@ -112,14 +121,17 @@ void runAppTests() {
 
       // Rapidly toggle between screens
       for (int i = 0; i < 2; i++) {
-        await tester.tap(find.byKey(const ValueKey('glassmorphism_card_button')));
+        await tester
+            .tap(find.byKey(const ValueKey('glassmorphism_card_button')));
         await tester.pumpAndSettle();
         expect(find.byType(GlassmorphismUI), findsOneWidget);
 
-        await tester.tap(find.byKey(const ValueKey('glass_app_bar_back_button')));
+        await tester
+            .tap(find.byKey(const ValueKey('glass_app_bar_back_button')));
         await tester.pumpAndSettle();
 
-        await tester.tap(find.byKey(const ValueKey('liquid_glass_card_button')));
+        await tester
+            .tap(find.byKey(const ValueKey('liquid_glass_card_button')));
         await tester.pumpAndSettle();
         expect(find.byType(LiquidGlassUI), findsOneWidget);
 
@@ -131,7 +143,8 @@ void runAppTests() {
         await tester.tap(find.byKey(const ValueKey('liquid_tab_item_3')));
         await tester.pumpAndSettle();
 
-        await tester.tap(find.byKey(const ValueKey('liquid_app_bar_back_button')));
+        await tester
+            .tap(find.byKey(const ValueKey('liquid_app_bar_back_button')));
         await tester.pumpAndSettle();
       }
 
