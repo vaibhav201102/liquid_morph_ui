@@ -10,6 +10,37 @@ A modern, high-performance Flutter showcase and reusable UI kit demonstrating tw
 
 ---
 
+## 📱 Visual Previews & Screenshots
+
+### 1. Main Selection Hub
+![Main Selection Hub Screen](screenshots/first_screen.png)
+
+### 2. Glassmorphism vs Liquid Glass Home Dashboards
+| Glassmorphism Home View | Liquid Glass Home View |
+| :---: | :---: |
+| ![Glassmorphism Home Screen](screenshots/glass_morphism_home_screen.png) | ![Liquid Glass Home Screen](screenshots/liquid_glass_home_screen.png) |
+| **Frosted Glass Dashboard** | **Dynamic Liquid Glass Dashboard** |
+
+### 3. Search & Discovery Screens
+| Glassmorphism Search View | Liquid Glass Search View |
+| :---: | :---: |
+| ![Glassmorphism Search Screen](screenshots/glass_morphism_search_screen.png) | ![Liquid Glass Search Screen](screenshots/liquid_glass_search_screen.png) |
+| **Frosted Input & Category List** | **Focus Glow Input & Liquid List** |
+
+### 4. Favorites & Collection Screens
+| Glassmorphism Favorites View | Liquid Glass Favorites View |
+| :---: | :---: |
+| ![Glassmorphism Favorites Screen](screenshots/glass_morphism_favorites_screen.png) | ![Liquid Glass Favorites Screen](screenshots/liquid_glass_favorites_screen.png) |
+| **Edge-to-Edge Frosted Favorites** | **Edge-to-Edge Glowing Favorites** |
+
+### 5. Profile & Settings Screens
+| Glassmorphism Profile View | Liquid Glass Profile View |
+| :---: | :---: |
+| ![Glassmorphism Profile Screen](screenshots/glass_morphism_profile_screen.png) | ![Liquid Glass Profile Screen](screenshots/liquid_glass_profile_screen.png) |
+| **Frosted Avatar & Account Options** | **Cyan Glow Avatar & Account Options** |
+
+---
+
 ## 🌟 Glass UI Component Suite (`glass_ui_kit.dart`)
 
 Developers can easily integrate standalone **Glass AppBars**, **Glass Buttons**, **Glass Switches**, **Glass Cards**, **Glass TextFields**, or **Widget Extensions**:
@@ -235,7 +266,7 @@ Or add to `pubspec.yaml`:
 dependencies:
   flutter:
     sdk: flutter
-  liquid_morph_ui: ^1.0.4
+  liquid_morph_ui: ^1.0.5
 ```
 
 ---

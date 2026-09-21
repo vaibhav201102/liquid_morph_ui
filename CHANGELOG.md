@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.5
+
+- **Visual Previews & Screenshots Grid in README**:
+  - Embedded 9 high-resolution screenshot previews in `README.md` covering the Main Selection Hub, Glassmorphism Home, Liquid Glass Home, Search Screens, Favorites ListViews, and Profile Screens.
+  - Replaced HTML `<img>` tags with native Markdown `![Alt Text](path)` syntax for optimal rendering across pub.dev, GitHub, and IDE previews.
+- **Top Padding Optimization**: Refined screen content top padding (`topPadding = 136.0px`) for edge-to-edge glass cards to clear the floating Glass AppBar.
+- **Automated OIDC CI/CD Pipeline Verification**: Verified GitHub Actions workflow (`.github/workflows/ci_cd.yml`) with automated formatting, static analysis, 98 unit/widget tests, pub.dev OIDC publishing, and git release auto-tagging.
+
 ## 1.0.4
 
 - **Modular Domain Directory Restructuring**:
