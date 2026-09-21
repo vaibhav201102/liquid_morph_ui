@@ -75,7 +75,12 @@ void main() {
     ) async {
       await tester.pumpWidget(
         buildTestWidget(
-          titles: const ['Custom Home', 'Custom Search', 'Custom Fav', 'Custom Profile'],
+          titles: const [
+            'Custom Home',
+            'Custom Search',
+            'Custom Fav',
+            'Custom Profile'
+          ],
         ),
       );
       await tester.pumpAndSettle();
@@ -88,7 +93,8 @@ void main() {
       expect(find.text('Custom Search'), findsOneWidget);
     });
 
-    testWidgets('Renders custom AppBar title and action widgets passed from outside', (
+    testWidgets(
+        'Renders custom AppBar title and action widgets passed from outside', (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(
@@ -102,7 +108,8 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Custom Glassmorphism Title'), findsOneWidget);
-      expect(find.byKey(const ValueKey('custom_settings_icon')), findsOneWidget);
+      expect(
+          find.byKey(const ValueKey('custom_settings_icon')), findsOneWidget);
     });
 
     testWidgets('Tapping search tab switches active page to Search Screen', (
@@ -137,7 +144,8 @@ void main() {
       expect(find.byIcon(Icons.person), findsOneWidget);
     });
 
-    testWidgets('Tapping currently active tab retains selection and does not error', (
+    testWidgets(
+        'Tapping currently active tab retains selection and does not error', (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(buildTestWidget());
@@ -164,7 +172,8 @@ void main() {
       expect(find.byType(Offstage), findsWidgets);
     });
 
-    testWidgets('Horizontal drag gesture across bottom bar updates tab selection', (
+    testWidgets(
+        'Horizontal drag gesture across bottom bar updates tab selection', (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(buildTestWidget());

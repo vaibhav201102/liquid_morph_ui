@@ -443,7 +443,8 @@ class _LiquidGlassHomePageContentState
                   child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(Icons.water_drop, color: Color(0xFF38BDF8), size: 24),
+                      Icon(Icons.water_drop,
+                          color: Color(0xFF38BDF8), size: 24),
                       Gap(8.0),
                       Text(
                         'Liquid Card Alpha',
@@ -473,7 +474,8 @@ class _LiquidGlassHomePageContentState
                   child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(Icons.auto_awesome, color: Color(0xFFA855F7), size: 24),
+                      Icon(Icons.auto_awesome,
+                          color: Color(0xFFA855F7), size: 24),
                       Gap(8.0),
                       Text(
                         'Liquid Card Beta',
@@ -915,7 +917,8 @@ class GlassmorphismFavoritesContent extends StatelessWidget {
                           width: 1.0,
                         ),
                       ),
-                      child: const Icon(Icons.favorite, color: Colors.pinkAccent, size: 22),
+                      child: const Icon(Icons.favorite,
+                          color: Colors.pinkAccent, size: 22),
                     ),
                     const Gap(14.0),
                     Expanded(
@@ -942,7 +945,8 @@ class GlassmorphismFavoritesContent extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.favorite, color: Colors.pinkAccent, size: 20),
+                      icon: const Icon(Icons.favorite,
+                          color: Colors.pinkAccent, size: 20),
                       onPressed: () {},
                     ),
                   ],
@@ -988,8 +992,7 @@ class LiquidGlassFavoritesContent extends StatelessWidget {
       final title = items[index % items.length];
       return {
         'title': '$title #${index + 1}',
-        'subtitle':
-            'Dynamic liquid glass component item module #${index + 1}',
+        'subtitle': 'Dynamic liquid glass component item module #${index + 1}',
       };
     },
   );
@@ -1057,7 +1060,8 @@ class LiquidGlassFavoritesContent extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.favorite, color: Color(0xFF38BDF8), size: 20),
+                      icon: const Icon(Icons.favorite,
+                          color: Color(0xFF38BDF8), size: 20),
                       onPressed: () {},
                     ),
                   ],
@@ -1199,7 +1203,8 @@ class GlassmorphismProfileContent extends StatelessWidget {
                 const Divider(color: Colors.white24, height: 20),
                 _buildOptionRow(Icons.help_outline, 'Help & Support Center'),
                 const Divider(color: Colors.white24, height: 20),
-                _buildOptionRow(Icons.description_outlined, 'Terms & Privacy Policy'),
+                _buildOptionRow(
+                    Icons.description_outlined, 'Terms & Privacy Policy'),
               ],
             ),
           ),
@@ -1215,7 +1220,6 @@ class GlassmorphismProfileContent extends StatelessWidget {
             onTap: () {},
           ),
           const Gap(24.0),
-
         ],
       ),
     );
@@ -1241,7 +1245,8 @@ class GlassmorphismProfileContent extends StatelessWidget {
                 ),
               ),
             ),
-            const Icon(Icons.arrow_forward_ios, color: Colors.white54, size: 14),
+            const Icon(Icons.arrow_forward_ios,
+                color: Colors.white54, size: 14),
           ],
         ),
       ),
@@ -1380,7 +1385,8 @@ class LiquidGlassProfileContent extends StatelessWidget {
                 const Divider(color: Colors.white24, height: 20),
                 _buildOptionRow(Icons.help_outline, 'Help & Support Center'),
                 const Divider(color: Colors.white24, height: 20),
-                _buildOptionRow(Icons.description_outlined, 'Terms & Privacy Policy'),
+                _buildOptionRow(
+                    Icons.description_outlined, 'Terms & Privacy Policy'),
               ],
             ),
           ),
@@ -1395,7 +1401,6 @@ class LiquidGlassProfileContent extends StatelessWidget {
             onTap: () {},
           ),
           const Gap(24.0),
-
         ],
       ),
     );
@@ -1421,7 +1426,8 @@ class LiquidGlassProfileContent extends StatelessWidget {
                 ),
               ),
             ),
-            const Icon(Icons.arrow_forward_ios, color: Colors.white54, size: 14),
+            const Icon(Icons.arrow_forward_ios,
+                color: Colors.white54, size: 14),
           ],
         ),
       ),

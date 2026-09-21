@@ -58,14 +58,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: 2. Setup Dart Environment
-        uses: dart-lang/setup-dart@v1
+      - name: 2. Setup Flutter Environment
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
 
       - name: 3. Install Dependencies
-        run: dart pub get
+        run: flutter pub get
 
       - name: 4. Publish Package to pub.dev
-        run: dart pub publish --force
+        run: flutter pub publish --force
 
       - name: 5. Create & Push Release Version Tag on Success
         if: success()
