@@ -21,7 +21,7 @@ class _GlassmorphismHomePageContentState
 
   @override
   Widget build(BuildContext context) {
-    const topPadding = 76.0;
+    const topPadding = 136.0;
     final bottomPadding = MediaQuery.of(context).padding.bottom + 90.0;
 
     return SingleChildScrollView(
@@ -276,7 +276,7 @@ class _LiquidGlassHomePageContentState
 
   @override
   Widget build(BuildContext context) {
-    const topPadding = 76.0;
+    const topPadding = 136.0;
     final bottomPadding = MediaQuery.of(context).padding.bottom + 90.0;
 
     return SingleChildScrollView(
@@ -573,7 +573,7 @@ class _GlassmorphismSearchContentState
 
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
-      padding: EdgeInsets.fromLTRB(20.0, 118.0, 20.0, bottomPadding),
+      padding: EdgeInsets.fromLTRB(20.0, 136.0, 20.0, bottomPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -734,7 +734,7 @@ class _LiquidGlassSearchContentState extends State<LiquidGlassSearchContent> {
 
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
-      padding: EdgeInsets.fromLTRB(20.0, 118.0, 20.0, bottomPadding),
+      padding: EdgeInsets.fromLTRB(20.0, 136.0, 20.0, bottomPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -898,7 +898,7 @@ class GlassmorphismFavoritesContent extends StatelessWidget {
         Expanded(
           child: ListView.separated(
             physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.fromLTRB(20.0, 118.0, 20.0, bottomPadding),
+            padding: EdgeInsets.fromLTRB(20.0, 136.0, 20.0, bottomPadding),
             itemCount: _favorites.length,
             separatorBuilder: (_, __) => const Gap(12.0),
             itemBuilder: (context, index) {
@@ -1007,7 +1007,7 @@ class LiquidGlassFavoritesContent extends StatelessWidget {
         Expanded(
           child: ListView.separated(
             physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.fromLTRB(20.0, 118.0, 20.0, bottomPadding),
+            padding: EdgeInsets.fromLTRB(20.0, 136.0, 20.0, bottomPadding),
             itemCount: _favorites.length,
             separatorBuilder: (_, __) => const Gap(12.0),
             itemBuilder: (context, index) {
@@ -1083,7 +1083,7 @@ class GlassmorphismProfileContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.fromLTRB(20.0, 118.0, 20.0, 100.0),
+      padding: const EdgeInsets.fromLTRB(20.0, 136.0, 20.0, 100.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -1262,7 +1262,7 @@ class LiquidGlassProfileContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.fromLTRB(20.0, 118.0, 20.0, 100.0),
+      padding: const EdgeInsets.fromLTRB(20.0, 136.0, 20.0, 100.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
