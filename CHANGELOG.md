@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.6
+
+- Readme updated.
+
 ## 1.0.5
 
 - **Visual Previews & Screenshots Grid in README**:

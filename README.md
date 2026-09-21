@@ -13,30 +13,30 @@ A modern, high-performance Flutter showcase and reusable UI kit demonstrating tw
 ## 📱 Visual Previews & Screenshots
 
 ### 1. Main Selection Hub
-![Main Selection Hub Screen](screenshots/first_screen.png)
+![Main Selection Hub Screen](https://4wnv1si1gw.ufs.sh/f/AggufDazdUmO8Ldq2xyACVIX4sRmNDZGiuPtMjYezhHd6oTp)
 
 ### 2. Glassmorphism vs Liquid Glass Home Dashboards
 | Glassmorphism Home View | Liquid Glass Home View |
 | :---: | :---: |
-| ![Glassmorphism Home Screen](screenshots/glass_morphism_home_screen.png) | ![Liquid Glass Home Screen](screenshots/liquid_glass_home_screen.png) |
+| ![Glassmorphism Home Screen](https://4wnv1si1gw.ufs.sh/f/AggufDazdUmOOZzaNZVCsVohSJulniHkjm02AdLcxz7b5Dtv) | ![Liquid Glass Home Screen](https://4wnv1si1gw.ufs.sh/f/AggufDazdUmOyc54YQUQ7JaSYyIet5ow6uWM8v4KRHPZlAOU) |
 | **Frosted Glass Dashboard** | **Dynamic Liquid Glass Dashboard** |
 
 ### 3. Search & Discovery Screens
 | Glassmorphism Search View | Liquid Glass Search View |
 | :---: | :---: |
-| ![Glassmorphism Search Screen](screenshots/glass_morphism_search_screen.png) | ![Liquid Glass Search Screen](screenshots/liquid_glass_search_screen.png) |
+| ![Glassmorphism Search Screen](https://4wnv1si1gw.ufs.sh/f/AggufDazdUmOYkamiCTcGeEDHsvP6omVBLYd4lzpuirINJ2k) | ![Liquid Glass Search Screen](https://4wnv1si1gw.ufs.sh/f/AggufDazdUmO9WnaXaX2bFnv80DS3YCOhAxoP1Wrd5UNZ6Kj) |
 | **Frosted Input & Category List** | **Focus Glow Input & Liquid List** |
 
 ### 4. Favorites & Collection Screens
 | Glassmorphism Favorites View | Liquid Glass Favorites View |
 | :---: | :---: |
-| ![Glassmorphism Favorites Screen](screenshots/glass_morphism_favorites_screen.png) | ![Liquid Glass Favorites Screen](screenshots/liquid_glass_favorites_screen.png) |
+| ![Glassmorphism Favorites Screen](https://4wnv1si1gw.ufs.sh/f/AggufDazdUmO1vKgN1yJnlBfWCsU6DSLoz9FtgaiZjHPmX0x) | ![Liquid Glass Favorites Screen](https://4wnv1si1gw.ufs.sh/f/AggufDazdUmOVuycKGY4MoyNCW8A79Jnr2HUESORDFVlzcQg) |
 | **Edge-to-Edge Frosted Favorites** | **Edge-to-Edge Glowing Favorites** |
 
 ### 5. Profile & Settings Screens
 | Glassmorphism Profile View | Liquid Glass Profile View |
 | :---: | :---: |
-| ![Glassmorphism Profile Screen](screenshots/glass_morphism_profile_screen.png) | ![Liquid Glass Profile Screen](screenshots/liquid_glass_profile_screen.png) |
+| ![Glassmorphism Profile Screen](https://4wnv1si1gw.ufs.sh/f/AggufDazdUmO0IXHBldmuLnFY21QEbZRih4VswTOSDfMIrpH) | ![Liquid Glass Profile Screen](https://4wnv1si1gw.ufs.sh/f/AggufDazdUmOfjQRIrbYLdb70MORD69e1BWl2vJFnf5kywos) |
 | **Frosted Avatar & Account Options** | **Cyan Glow Avatar & Account Options** |
 
 ---
@@ -266,7 +266,7 @@ Or add to `pubspec.yaml`:
 dependencies:
   flutter:
     sdk: flutter
-  liquid_morph_ui: ^1.0.5
+  liquid_morph_ui: ^1.0.6
 ```
 
 ---
