@@ -6,29 +6,51 @@ on:
       - main
       - master
     tags:
-      - 'v*'
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
   pull_request:
     branches:
       - main
       - master
 
 permissions:
-  id-token: write
-  contents: write
+  contents: read
 
+
+# =========================================================
+# 1. BUILD / LINT / TEST
+# =========================================================
 jobs:
+
   test_and_lint:
     name: Build, Lint & Test Verification
+
+    # Run for:
+    # - Pull Requests
+    # - Pushes to main/master
+    #
+    # Do NOT run this job for tag pushes.
+    if: >
+      github.event_name == 'pull_request' ||
+      (
+        github.event_name == 'push' &&
+        (
+          github.ref == 'refs/heads/main' ||
+          github.ref == 'refs/heads/master'
+        )
+      )
+
     runs-on: ubuntu-latest
 
     steps:
+
       - name: 1. Checkout Repository
         uses: actions/checkout@v4
 
       - name: 2. Setup Flutter Environment
         uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
+          channel: stable
           cache: true
 
       - name: 3. Install Dependencies
@@ -46,42 +68,108 @@ jobs:
       - name: 7. Package Dry-Run Publishing Check
         run: flutter pub publish --dry-run
 
-  publish_to_pub_dev:
-    name: Automated Publish to pub.dev & Auto-Tag Release
-    needs: test_and_lint
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v'))
+
+  # =========================================================
+  # 2. CREATE RELEASE TAG AUTOMATICALLY
+  # =========================================================
+  create_release_tag:
+    name: Create Release Version Tag
+
+    needs:
+      - test_and_lint
+
+    # Only execute after successful CI on main/master
+    if: >
+      github.event_name == 'push' &&
+      (
+        github.ref == 'refs/heads/main' ||
+        github.ref == 'refs/heads/master'
+      )
+
     runs-on: ubuntu-latest
 
     steps:
+
       - name: 1. Checkout Repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.RELEASE_TOKEN }}
 
-      - name: 2. Setup Flutter Environment
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          cache: true
-
-      - name: 3. Install Dependencies
-        run: flutter pub get
-
-      - name: 4. Publish Package to pub.dev
-        run: flutter pub publish --force
-
-      - name: 5. Create & Push Release Version Tag on Success
-        if: success()
+      - name: 2. Read Package Version
+        id: package_version
+        shell: bash
         run: |
-          VERSION=$(grep '^version:' pubspec.yaml | awk '{print $2}')
-          TAG="v$VERSION"
-          echo "Package published successfully to pub.dev! Creating version tag: $TAG"
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          if git rev-parse "$TAG" >/dev/null 2>&1; then
-            echo "Tag $TAG already exists."
-          else
-            git tag -a "$TAG" -m "Release $TAG published to pub.dev"
-            git push origin "$TAG"
-            echo "Successfully created and pushed tag $TAG to GitHub repository."
+          VERSION=$(awk '/^version:/ {print $2; exit}' pubspec.yaml)
+
+          if [ -z "$VERSION" ]; then
+            echo "ERROR: Could not find version in pubspec.yaml"
+            exit 1
           fi
+
+          echo "Package version: $VERSION"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: 3. Validate Version
+        shell: bash
+        run: |
+          VERSION="${{ steps.package_version.outputs.version }}"
+
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "ERROR: Version '$VERSION' is not a stable semantic version."
+            echo "Expected format: X.Y.Z"
+            exit 1
+          fi
+
+          echo "Valid version: $VERSION"
+
+      - name: 4. Create Release Tag
+        shell: bash
+        run: |
+          VERSION="${{ steps.package_version.outputs.version }}"
+          TAG="v$VERSION"
+
+          echo "Release tag: $TAG"
+
+          # Check whether the tag already exists on remote
+          if git ls-remote --exit-code --tags origin "refs/tags/$TAG" >/dev/null 2>&1; then
+            echo "ERROR: Tag $TAG already exists."
+            echo "Please increase the version in pubspec.yaml before merging."
+            exit 1
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git tag -a "$TAG" -m "Release $TAG"
+
+          echo "Created tag $TAG"
+
+      - name: 5. Push Release Tag
+        shell: bash
+        run: |
+          VERSION="${{ steps.package_version.outputs.version }}"
+          TAG="v$VERSION"
+
+          git push origin "$TAG"
+
+          echo "Successfully pushed $TAG"
+          echo "This tag push will trigger the pub.dev publishing job."
+
+
+  # =========================================================
+  # 3. PUBLISH TO PUB.DEV
+  # =========================================================
+  publish_to_pub_dev:
+    name: Publish Package to pub.dev
+
+    # IMPORTANT:
+    # This job runs ONLY when GitHub receives a tag push.
+    if: >
+      github.event_name == 'push' &&
+      startsWith(github.ref, 'refs/tags/v')
+
+    permissions:
+      id-token: write
+
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
